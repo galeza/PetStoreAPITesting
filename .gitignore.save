@@ -1,0 +1,65 @@
+X
+.metadata
+bin/
+tmp/
+*.tmp
+*.bak
+*.swp
+*~.nib
+local.properties
+.settings/
+.loadpath
+.recommenders
+*.egg-info
+*.log
+*.pyc
+*.pyo
+*$py.class
+build/
+dist/
+__pycache__/
+__WORKDIR__/
+_build/
+_WORKSPACE/
+reports/
+tools/virtualenvs
+.cache/
+.idea/
+.pytest_cache/
+.tox/
+.venv*/
+.vscode/
+.DS_Store
+.coverage
+.ropeproject
+nosetests.xml
+rerun.txt
+
+#test reports
+*report.html
+
+# Eclipse Core
+.project
+
+# OS generated files 
+.DS_Store
+.DS_Store?
+._*
+.Spotlight-V100
+.Trashes
+ehthumbs.db
+
+# External tool builders
+.externalToolBuilders/
+
+# Locally stored "Eclipse launch configurations"
+*.launch
+
+# PyDev specific (Python IDE for Eclipse)
+*.pydevproject
+
+
+# Byte-compiled / optimized / DLL files
+__pycache__/
+*.py[cod]
+*$py.class
