@@ -1,16 +1,16 @@
 '''
-Created on Sep 14, 2018
+Created on Sep 15, 2018
 
 @author: agagaleza
 '''
 
-class ConfigManager(object):
+class Pet(object):
     '''
     classdocs
     '''
 
 
-    def __init__(self):
+    def __init__(self, params):
         '''
         Constructor
         '''
