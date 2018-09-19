@@ -4,6 +4,8 @@ Created on Sep 15, 2018
 @author: agagaleza
 '''
 
+from common.util.random_string_generator import RandomStringGenerator
+
 # -----------------------------------------------------------------------------
 # DOMAIN-MODEL:
 # -----------------------------------------------------------------------------
@@ -21,9 +23,6 @@ class Pet(object):
     def get_pet_id(self):
         return  self.pet_id
 
-    def set_pet_id(self, pet_id):
-        self.pet_id = pet_id
-            
     def get_pet_name(self):
         return self.name
 
@@ -43,9 +42,8 @@ class Pet(object):
         self.photoUrls = photoUrls
     
     def set_pet_details(self, pet_details):
-        self.set_pet_id(pet_details.get("id"))  
         self.set_pet_name(pet_details.get("name"))
-#         for dla pet_URLS
+#         for pet_URLS
         self.set_pet_photoUrls(pet_details.get("photoUrls"))
         self.set_pet_status(pet_details.get("status"))
         
@@ -53,6 +51,7 @@ class Pet(object):
         '''
         Constructor
         '''
+        self.pet_id = RandomStringGenerator.generate_random_number_with_N_digits(6)
 
         
         

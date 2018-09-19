@@ -5,6 +5,7 @@ Created on Sep 15, 2018
 '''
 
 import random, string
+from random import randint
 
 class RandomStringGenerator(object):
     '''
@@ -20,8 +21,10 @@ class RandomStringGenerator(object):
         return ''.join(str(random.randint(0,9)) for i in range(start_index,stop_index))
 
     @staticmethod
-    def generate_random_pet_id(start_index, stop_index):
-        return random.randint(start_index, stop_index)
+    def generate_random_number_with_N_digits(lenght):
+        range_start = 10**(lenght-1)
+        range_end = (10**lenght)-1
+        return randint(range_start, range_end)
     
     def __init__(self):
         '''

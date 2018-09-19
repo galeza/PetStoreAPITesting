@@ -25,8 +25,18 @@ def step_impl(context, post_endpoint):
 
 @when(u'Set pet details as "{particular}" and "{value}" below') 
 def step_impl(context, particular, value):
+    photoUrls = []
     for row in context.table:
-        pet_details[row['particular']] = row['value']
+        print(row['particular'])
+        if(row['particular']) == "photoUrls":
+            
+            photoUrls.append(row['value'])
+            
+        else:
+            pet_details[row['particular']] = row['value']
+    if photoUrls.__len__() > 0:
+        pet_details["photoUrls"] = photoUrls  
+    print("lenght = " + str(photoUrls.__len__()))
     context.pet.set_pet_details(pet_details)
                 
 @when(u'Set BODY form param using pet details')

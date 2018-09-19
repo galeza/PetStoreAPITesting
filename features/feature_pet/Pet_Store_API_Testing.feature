@@ -12,10 +12,10 @@ Scenario: User can add new pet using POST request
 	And Set pet details as "<particular>" and "<value>" below
 	
 		| particular                                     | value  |
-		| id                                             | ${!2,N3}|
-		| name                                           |    ${6}  |
-		| photoUrls                                      | "String" |
-		| status                                         | "sold" |
+		| name                                           | Elwanek|
+		| photoUrls                                      | /Users/agagaleza/Documents/Selenium/workspace/PetStoreAPITesting1 |
+		| photoUrls                                      | /Users/agagaleza/Documents/Selenium/workspace/PetStoreAPITesting2 |
+		| status                                         | sold|
 #	And Add pet {status}
 	And Set BODY form param using pet details  
 	And Raise "POST" HTTP request

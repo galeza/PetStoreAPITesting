@@ -107,7 +107,8 @@ class RequestConfigManager(object):
     
     def set_http_request_body_with_pet_details(self, pet):
         self.http_request_body['id'] = pet.get_pet_id()
+        print(pet.get_pet_id())
         self.http_request_body['name'] = pet.get_pet_name()
-#         self.http_request_body['photoUrls'] = pet.get_pet_photoUrls()
+        self.http_request_body['photoUrls'] = pet.get_pet_photoUrls()
         self.http_request_body['status'] = pet.get_pet_status()
 
