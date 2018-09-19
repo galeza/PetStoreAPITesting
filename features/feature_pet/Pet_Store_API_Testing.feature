@@ -5,25 +5,38 @@ Feature: REST API Python and Bahave testing framework
 Background: 
 	Given Set web application url as "https://petstore.swagger.io/v2/"
 
-#Scenario: User can add new pet using POST request
-#  Given Set POST pet api endpoint as "pet"
-#  When Set HEADER param request content type as "application/json"
-#	And Set HEADER param response accept type as "application/json" 
-#	And Set BODY form param using pet details 
-#	And Raise "POST" HTTP request
-#  Then Valid HTTP response should be received 
-#	And Response http code should be 200 
-#	And Response HEADER content type should be "application/json" 
-#	And Response BODY should not be null or empty 
-#	And Response BODY contains newly added pet details
-		
-Scenario: GET pet request using pet ID
-  Given Set GET pet request endpoint
+Scenario: User can add new pet using POST request
+  Given Set POST pet api endpoint as "pet"
   When Set HEADER param request content type as "application/json"
-	And Set HEADER param response accept type as "application/json" 
-	And Raise "GET" HTTP request
-  Then Valid HTTP response should be received
+  	And Set HEADER param response accept type as "application/json" 
+	And Set pet details as "<particular>" and "<value>" below
+	
+		| particular                                     | value  |
+		| id                                             | ${!2,N3}|
+		| name                                           |    ${6}  |
+		| photoUrls                                      | "String" |
+		| status                                         | "sold" |
+#	And Add pet {status}
+	And Set BODY form param using pet details  
+	And Raise "POST" HTTP request
+  Then Valid HTTP response should be received 
 	And Response http code should be 200 
 	And Response HEADER content type should be "application/json" 
 	And Response BODY should not be null or empty 
-	#And Validate json response "Maxik" and "sold"	as "pet/2
+#	And Response BODY contains newly added pet details
+#    Examples: Pets
+#      | status |
+#      | pending|
+#      | available|
+#      |sold|
+#		
+#Scenario: GET pet request using pet ID
+#  Given Set GET pet request endpoint
+#  When Set HEADER param request content type as "application/json"
+#	And Set HEADER param response accept type as "application/json" 
+#	And Raise "GET" HTTP request
+#  Then Valid HTTP response should be received
+#	And Response http code should be 200 
+#	And Response HEADER content type should be "application/json" 
+#	And Response BODY should not be null or empty 
+#	#And Validate json response "Maxik" and "sold"	as "pet/2

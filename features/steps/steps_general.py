@@ -7,11 +7,12 @@ Created on Sep 10, 2018
 import requests
 from common.config.request_config_manager import RequestConfigManager
 from behave import given, when, then, step
-
+from features.domain_models.pet import Pet
 
 
 @given(u'Set web application url as "{basic_url}"')
 def step_impl(context, basic_url):
+    context.pet = Pet()
     context.requestConfigManager = RequestConfigManager()
     context.requestConfigManager.set_basic_url(basic_url)
     
@@ -30,14 +31,12 @@ def step_impl(context, http_request_type):
     if 'GET' == http_request_type:
         url_temp += context.requestConfigManager.get_GET_endpoint()
         context.requestConfigManager.clear_http_request_body()
-        context.requestConfigManager.set_response_full(url_temp)
-#     elif 'POST' == http_request_type:
-#         url_temp += global_general_variables['POST_api_endpoint']
-#         http_request_url_query_param.clear()
-#         global_general_variables['response_full'] = requests.post(url_temp,
-#                                                                                          headers=http_request_header,
-#                                                                                          params=http_request_url_query_param,
-#                                                                                          data=http_request_body)
+        context.requestConfigManager.set_get_response_full(url_temp)
+    elif 'POST' == http_request_type:
+        url_temp += context.requestConfigManager.get_POST_endpoint()
+#         context.requestConfigManager.clear_http_request_body()
+        context.requestConfigManager.set_post_response_full(url_temp)
+        
 #     elif 'PUT' == http_request_type:
 #         url_temp += global_general_variables['PUT_api_endpoint']
 #         http_request_url_query_param.clear()
@@ -64,7 +63,6 @@ def step_impl(context, expected_response_code):
     context.requestConfigManager.set_expected_response_code(expected_response_code)
     actual_response_code = context.requestConfigManager.get_response_full_status_code()
     if str(actual_response_code) not in str(expected_response_code):
-        print (str(context.requestConfigManager.get_response_full.json()))
         assert False, '***ERROR: Following unexpected error response code received: ' + str(actual_response_code)
 
 
