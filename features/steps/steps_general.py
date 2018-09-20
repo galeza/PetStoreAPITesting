@@ -12,6 +12,10 @@ from features.domain_models.pet import Pet
 
 @given(u'Set web application url as "{basic_url}"')
 def step_impl(context, basic_url):
+    """
+    BACKGROUND step is called at begin of each scenario before other steps.
+    """
+    # -- SETUP
     context.pet = Pet()
     context.requestConfigManager = RequestConfigManager()
     context.requestConfigManager.set_basic_url(basic_url)

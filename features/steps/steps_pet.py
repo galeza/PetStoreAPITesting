@@ -6,8 +6,7 @@ Created on Sep 10, 2018
 '''
 from behave import given, when, then, step
 from common.config.request_config_manager import RequestConfigManager
-from features.domain_models.pet import Pet
-from common.util.random_string_generator import RandomStringGenerator
+
 
 pet_details ={}
 
@@ -27,7 +26,6 @@ def step_impl(context, post_endpoint):
 def step_impl(context, particular, value):
     photoUrls = []
     for row in context.table:
-        print(row['particular'])
         if(row['particular']) == "photoUrls":
             
             photoUrls.append(row['value'])
@@ -36,9 +34,12 @@ def step_impl(context, particular, value):
             pet_details[row['particular']] = row['value']
     if photoUrls.__len__() > 0:
         pet_details["photoUrls"] = photoUrls  
-    print("lenght = " + str(photoUrls.__len__()))
     context.pet.set_pet_details(pet_details)
                 
+@when(u'Add pet "{status}"')
+def step_impl(context, status):
+    context.pet.set_pet_status(status)
+                    
 @when(u'Set BODY form param using pet details')
 def step_impl(context):
     context.requestConfigManager.set_http_request_body_with_pet_details(context.pet)
