@@ -83,7 +83,9 @@ class RequestConfigManager(object):
         
     def get_response_full(self):
         return self.basic_config['response_full']  
-    
+
+    def get_response_full_json(self):
+        return self.basic_config['response_full'].json()     
     
     def set_expected_response_code(self, expected_response_code):
         self.basic_config['expected_response_code'] = expected_response_code
@@ -111,4 +113,5 @@ class RequestConfigManager(object):
         self.http_request_body['name'] = pet.get_pet_name()
         self.http_request_body['photoUrls'] = pet.get_pet_photoUrls()
         self.http_request_body['status'] = pet.get_pet_status()
+
 

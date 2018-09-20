@@ -83,8 +83,7 @@ def step_impl(context):
     if None in context.requestConfigManager.get_response_full():
         assert False, '***ERROR:  Null or none response body received'
         
-        
-        
+
         
         
         

@@ -43,3 +43,15 @@ def step_impl(context, status):
 @when(u'Set BODY form param using pet details')
 def step_impl(context):
     context.requestConfigManager.set_http_request_body_with_pet_details(context.pet)
+    
+    
+@then(u'Response BODY contains newly added pet details')
+def step_impl(context):
+    added_pet_json = context.requestConfigManager.get_response_full_json()
+    assert(added_pet_json['status'] == context.pet.get_pet_status())
+    assert(added_pet_json['name'] == context.pet.get_pet_name())
+    assert(added_pet_json['id'] == context.pet.get_pet_id())
+# TODO how to validate photoUrls
+    
+    
+    

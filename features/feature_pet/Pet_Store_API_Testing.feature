@@ -23,7 +23,7 @@ Scenario Outline: User can add new pet using POST request
 	And Response http code should be 200 
 	And Response HEADER content type should be "application/json" 
 	And Response BODY should not be null or empty 
-#	And Response BODY contains newly added pet details
+	And Response BODY contains newly added pet details
     Examples: Pets
       | status |
       | pending|
