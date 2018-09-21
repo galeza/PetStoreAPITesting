@@ -43,6 +43,7 @@ Scenario: GET pet request using pet ID
     And Set HEADER params for request and response
 	And Raise "GET" HTTP request
   Then Valid HTTP response should be received
+#  	And Validate response
 	And Response http code should be 200 
 	And Response HEADER content type should be "application/json" 
 	And Response BODY should not be null or empty 
