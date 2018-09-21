@@ -75,10 +75,11 @@ class RequestConfigManager(object):
                                                                                          headers=self.http_request_header,
                                                                                          params=self.http_request_url_query_param,
                                                                                          json=self.http_request_body) 
-        print("requests is " + str(url_temp))
+        print("url is " + str(url_temp))
+        print("body : ")
         print(self.http_request_body)
-        print("requests is " + str(self.http_request_header))
-        print("requests is " + str(self.http_request_url_query_param))
+        print("header is " + str(self.http_request_header))
+        print("query param is " + str(self.http_request_url_query_param))
  
         
     def get_response_full(self):

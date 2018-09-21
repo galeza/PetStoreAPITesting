@@ -10,15 +10,14 @@ from common.config.request_config_manager import RequestConfigManager
 
 pet_details ={}
 
-@given(u'Set GET pet request endpoint')
-def step_impl(context):
-#     context.pet = Pet()
+#get specific id
+@when(u'Set GET pet request endpoint was set as "{get_endpoint}"')
+def step_impl(context, get_endpoint):
     context.requestConfigManager = RequestConfigManager()
-    context.requestConfigManager.set_GET_endpoint("pet/" + str(context.pet.get_pet_id()))
+    context.requestConfigManager.set_GET_endpoint(get_endpoint + str(context.pet.get_pet_id()))
 
 @given(u'Set POST pet api endpoint as "{post_endpoint}"')
 def step_impl(context, post_endpoint):
-#     context.pet = Pet()
     context.requestConfigManager = RequestConfigManager()
     context.requestConfigManager.set_POST_endpoint(post_endpoint)
 
@@ -53,5 +52,11 @@ def step_impl(context):
     assert(added_pet_json['id'] == context.pet.get_pet_id())
 # TODO how to validate photoUrls
     
-    
+@when(u'Set pet details as "{pet_name}" and "{photoUrl}" and "{status}"')
+def step_impl(context, pet_name, photoUrl,status ):
+    context.pet.set_pet_name(pet_name)
+    context.pet.set_pet_status(status)
+    photoUrls = []
+    photoUrls.append(photoUrl)
+    context.pet.set_pet_photoUrls(photoUrls)
     

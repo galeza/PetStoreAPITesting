@@ -57,12 +57,12 @@ def step_impl(context, http_request_type):
 #                                                                                             data=http_request_body)
 
 
-@then(u'Valid HTTP response should be received')
+@step(u'Valid HTTP response should be received')
 def step_impl(context):
     if None in context.requestConfigManager.get_response_full():
         assert False, 'Null response received'
         
-@then(u'Response http code should be {expected_response_code:d}')
+@step(u'Response http code should be {expected_response_code:d}')
 def step_impl(context, expected_response_code):
     context.requestConfigManager.set_expected_response_code(expected_response_code)
     actual_response_code = context.requestConfigManager.get_response_full_status_code()
@@ -83,7 +83,10 @@ def step_impl(context):
     if None in context.requestConfigManager.get_response_full():
         assert False, '***ERROR:  Null or none response body received'
         
-
+@when(u'Set HEADER params for request and response')
+def step_impl(context):
+    context.execute_steps(u''' when Set HEADER param request content type as "application/json"
+    and Set HEADER param response accept type as "application/json" ''')
         
         
         

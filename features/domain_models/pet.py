@@ -52,6 +52,7 @@ class Pet(object):
         Constructor
         '''
         self.pet_id = RandomStringGenerator.generate_random_number_with_N_digits(6)
+        print("constructor = " + str(self.pet_id))
 
         
         
