@@ -33,7 +33,7 @@ def step_impl(context, header_accept_type):
 def step_impl(context, http_request_type):
     url_temp = context.requestConfigManager.get_basic_url() 
     if 'GET' == http_request_type:
-        url_temp += context.requestConfigManager.get_GET_endpoint()
+        url_temp += context.requestConfigManager.get_endpoint()
         context.requestConfigManager.clear_http_request_body()
         context.requestConfigManager.set_get_response_full(url_temp)
     elif 'POST' == http_request_type:
@@ -48,13 +48,9 @@ def step_impl(context, http_request_type):
 #                                                                                          headers=http_request_header,
 #                                                                                          params=http_request_url_query_param,
 #                                                                                          data=http_request_body)
-#     elif 'DELETE' == http_request_type:
-#         url_temp += global_general_variables['DELETE_api_endpoint']
-#         http_request_body.clear()
-#         global_general_variables['response_full'] = requests.delete(url_temp,
-#                                                                                             headers=http_request_header,
-#                                                                                             params=http_request_url_query_param,
-#                                                                                             data=http_request_body)
+    elif 'DELETE' == http_request_type:
+        url_temp += context.requestConfigManager.get_endpoint()
+        context.requestConfigManager.set_delete_response_full(url_temp)
 
 
 @step(u'Valid HTTP response should be received')

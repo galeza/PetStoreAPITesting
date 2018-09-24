@@ -10,11 +10,12 @@ from common.config.request_config_manager import RequestConfigManager
 
 pet_details ={}
 
-#get specific id
-@when(u'Set GET pet request endpoint was set as "{get_endpoint}"')
-def step_impl(context, get_endpoint):
+#specific id
+@when(u'Set GET pet request endpoint was set as "{endpoint}"')
+@when(u'Set DELETE pet request endpoint was set as "{endpoint}"')
+def step_impl(context, endpoint):
     context.requestConfigManager = RequestConfigManager()
-    context.requestConfigManager.set_GET_endpoint(get_endpoint + str(context.pet.get_pet_id()))
+    context.requestConfigManager.set_endpoint(endpoint + str(context.pet.get_pet_id()))
 
 @given(u'Set POST pet api endpoint as "{post_endpoint}"')
 def step_impl(context, post_endpoint):

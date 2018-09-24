@@ -45,11 +45,11 @@ class RequestConfigManager(object):
     def get_http_accept_type(self):
         return self.http_request_header['accept']   
     
-    def set_GET_endpoint(self, get_api_endpoint):
-        self.basic_config['GET_api_endpoint'] = get_api_endpoint
+    def set_endpoint(self, api_endpoint):
+        self.basic_config['api_endpoint'] = api_endpoint
     
-    def get_GET_endpoint(self):
-        return self.basic_config['GET_api_endpoint']       
+    def get_endpoint(self):
+        return self.basic_config['api_endpoint']       
  
     def set_POST_endpoint(self, post_api_endpoint):
         self.basic_config['POST_api_endpoint'] = post_api_endpoint
@@ -81,7 +81,18 @@ class RequestConfigManager(object):
         print("header is " + str(self.http_request_header))
         print("query param is " + str(self.http_request_url_query_param))
  
-        
+    def set_delete_response_full(self, url_temp):
+        self.http_request_url_query_param.clear()
+        self.basic_config['response_full'] = requests.delete(url_temp,
+                                                                                         headers=self.http_request_header,
+                                                                                         params=self.http_request_url_query_param,
+                                                                                         json=self.http_request_body) 
+        print("url is " + str(url_temp))
+        print("body : ")
+        print(self.http_request_body)
+        print("header is " + str(self.http_request_header))
+        print("query param is " + str(self.http_request_url_query_param))
+                
     def get_response_full(self):
         return self.basic_config['response_full']  
 
