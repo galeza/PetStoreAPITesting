@@ -37,17 +37,14 @@ def step_impl(context, http_request_type):
         context.requestConfigManager.clear_http_request_body()
         context.requestConfigManager.set_get_response_full(url_temp)
     elif 'POST' == http_request_type:
-        url_temp += context.requestConfigManager.get_POST_endpoint()
+        url_temp += context.requestConfigManager.get_endpoint()
 #         context.requestConfigManager.clear_http_request_body()
         context.requestConfigManager.set_post_response_full(url_temp)
         
-#     elif 'PUT' == http_request_type:
-#         url_temp += global_general_variables['PUT_api_endpoint']
-#         http_request_url_query_param.clear()
-#         global_general_variables['response_full'] = requests.put(url_temp,
-#                                                                                          headers=http_request_header,
-#                                                                                          params=http_request_url_query_param,
-#                                                                                          data=http_request_body)
+    elif 'PUT' == http_request_type:
+        url_temp += context.requestConfigManager.get_endpoint()
+        context.requestConfigManager.set_put_response_full(url_temp)
+        
     elif 'DELETE' == http_request_type:
         url_temp += context.requestConfigManager.get_endpoint()
         context.requestConfigManager.set_delete_response_full(url_temp)
