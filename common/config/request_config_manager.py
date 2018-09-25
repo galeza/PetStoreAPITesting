@@ -51,11 +51,11 @@ class RequestConfigManager(object):
     def get_endpoint(self):
         return self.basic_config['api_endpoint']       
  
-    def set_POST_endpoint(self, post_api_endpoint):
-        self.basic_config['POST_api_endpoint'] = post_api_endpoint
-    
-    def get_POST_endpoint(self):
-        return self.basic_config['POST_api_endpoint']   
+#     def set_POST_endpoint(self, post_api_endpoint):
+#         self.basic_config['POST_api_endpoint'] = post_api_endpoint
+#     
+#     def get_POST_endpoint(self):
+#         return self.basic_config['POST_api_endpoint']   
        
     def get_http_request_body(self):
         return self.http_request_body
@@ -75,7 +75,7 @@ class RequestConfigManager(object):
                                                                                          headers=self.http_request_header,
                                                                                          params=self.http_request_url_query_param,
                                                                                          json=self.http_request_body) 
-        print("url is " + str(url_temp))
+        print("post url is " + str(url_temp))
         print("body : ")
         print(self.http_request_body)
         print("header is " + str(self.http_request_header))
@@ -92,7 +92,19 @@ class RequestConfigManager(object):
         print(self.http_request_body)
         print("header is " + str(self.http_request_header))
         print("query param is " + str(self.http_request_url_query_param))
-                
+
+    def set_put_response_full(self, url_temp):
+        self.http_request_url_query_param.clear()
+        self.basic_config['response_full'] = requests.put(url_temp,
+                                                                                         headers=self.http_request_header,
+                                                                                         params=self.http_request_url_query_param,
+                                                                                         json=self.http_request_body) 
+        print("put url is " + str(url_temp))
+        print("body : ")
+        print(self.http_request_body)
+        print("header is " + str(self.http_request_header))
+        print("query param is " + str(self.http_request_url_query_param))
+                        
     def get_response_full(self):
         return self.basic_config['response_full']  
 

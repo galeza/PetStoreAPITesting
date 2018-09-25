@@ -6,9 +6,8 @@ Background:
 	Given Set web application url as "https://petstore.swagger.io/v2/"
 
 Scenario Outline: User can add new pet using POST request
-  Given Set POST pet api endpoint as "pet"
-  When Set HEADER param request content type as "application/json"
-  	And Set HEADER param response accept type as "application/json" 
+  Given "POST" api pet request endpoint was set as "pet"
+  When  Set HEADER params for request and response
 	And Set pet details as "<particular>" and "<value>" below
 	
 		| particular                                     | value  |
@@ -32,14 +31,14 @@ Scenario Outline: User can add new pet using POST request
 		
 Scenario: GET pet request using pet ID
 
-  Given Set POST pet api endpoint as "pet"
+  Given "POST" api pet request endpoint was set as "pet"
   When Set HEADER params for request and response
 	And Set pet details as "Elwanek" and "/Users/a/Documents/Sel/workspace/PetStoreAPITesting1 " and "pending"
 	And Set BODY form param using pet details  
 	And Raise "POST" HTTP request
     And Valid HTTP response should be received 
 	And Response http code should be 200 
-    And Set GET pet request endpoint was set as "pet/"
+    And "GET" api pet request endpoint was set as "pet"
     And Set HEADER params for request and response
 	And Raise "GET" HTTP request
   Then Valid HTTP response should be received
@@ -51,14 +50,14 @@ Scenario: GET pet request using pet ID
 	
 Scenario: DELETE pet request using pet ID
 
-  Given Set POST pet api endpoint as "pet"
+  Given "POST" api pet request endpoint was set as "pet"
   When Set HEADER params for request and response
 	And Set pet details as "Elwanek" and "/Users/a/Documents/Sel/workspace/PetStoreAPITesting1 " and "sold"
 	And Set BODY form param using pet details  
 	And Raise "POST" HTTP request
     And Valid HTTP response should be received 
 	And Response http code should be 200 
-    And Set DELETE pet request endpoint was set as "pet/"
+    And "DELETE" api pet request endpoint was set as "pet"
     And Set HEADER params for request and response
 	And Raise "DELETE" HTTP request
   Then Valid HTTP response should be received
@@ -66,3 +65,24 @@ Scenario: DELETE pet request using pet ID
 	And Response http code should be 200 
 	And Response HEADER content type should be "application/json" 
 	And Response BODY should not be null or empty 
+	
+Scenario: UPDATE pet request using pet ID
+
+  Given "POST" api pet request endpoint was set as "pet"
+  When Set HEADER params for request and response
+	And Set pet details as "Elwanek" and "/Users/a/Documents/Sel/workspace/PetStoreAPITesting1 " and "pending"
+	And Set BODY form param using pet details  
+	And Raise "POST" HTTP request
+    And Valid HTTP response should be received 
+	And Response http code should be 200 
+    And "PUT" api pet request endpoint was set as "pet"	
+    And Set pet details as "Elwanek2" and "/Users/a/Documents/Sel/workspace/PetStoreAPITesting2 " and "sold"
+    And Set BODY form param using pet details 
+	And Raise "PUT" HTTP request
+  Then Valid HTTP response should be received
+#  	And Validate response
+	And Response http code should be 200 
+	And Response HEADER content type should be "application/json" 
+	And Response BODY should not be null or empty 	
+		
+	

@@ -7,20 +7,24 @@ Created on Sep 10, 2018
 from behave import given, when, then, step
 from common.config.request_config_manager import RequestConfigManager
 
+pet_details = {}
 
-pet_details ={}
 
-#specific id
-@when(u'Set GET pet request endpoint was set as "{endpoint}"')
-@when(u'Set DELETE pet request endpoint was set as "{endpoint}"')
-def step_impl(context, endpoint):
+# specific id
+@step(u'"{http_request_type}" api pet request endpoint was set as "{endpoint}"')
+def step_impl(context, http_request_type, endpoint):
     context.requestConfigManager = RequestConfigManager()
-    context.requestConfigManager.set_endpoint(endpoint + str(context.pet.get_pet_id()))
+    if 'GET' == http_request_type:
+        context.requestConfigManager.set_endpoint(endpoint + "/" + str(context.pet.get_pet_id()))
+    elif 'POST' == http_request_type:
+        context.requestConfigManager.set_endpoint(endpoint)
+    elif 'PUT' == http_request_type:
+        context.requestConfigManager.set_endpoint(endpoint)
+    elif 'DELETE' == http_request_type:
+        context.requestConfigManager.set_endpoint(endpoint + "/" + str(context.pet.get_pet_id()))       
+        
+    print(str(context.pet.get_pet_id))
 
-@given(u'Set POST pet api endpoint as "{post_endpoint}"')
-def step_impl(context, post_endpoint):
-    context.requestConfigManager = RequestConfigManager()
-    context.requestConfigManager.set_POST_endpoint(post_endpoint)
 
 @when(u'Set pet details as "{particular}" and "{value}" below') 
 def step_impl(context, particular, value):
@@ -35,10 +39,12 @@ def step_impl(context, particular, value):
     if photoUrls.__len__() > 0:
         pet_details["photoUrls"] = photoUrls  
     context.pet.set_pet_details(pet_details)
+
                 
 @when(u'Add pet "{status}"')
 def step_impl(context, status):
     context.pet.set_pet_status(status)
+
                     
 @when(u'Set BODY form param using pet details')
 def step_impl(context):
@@ -52,10 +58,13 @@ def step_impl(context):
     assert(added_pet_json['name'] == context.pet.get_pet_name())
     assert(added_pet_json['id'] == context.pet.get_pet_id())
 # TODO how to validate photoUrls
+
     
 @when(u'Set pet details as "{pet_name}" and "{photoUrl}" and "{status}"')
-def step_impl(context, pet_name, photoUrl,status ):
+def step_impl(context, pet_name, photoUrl, status):
+    print("1 " + context.pet.get_pet_name())
     context.pet.set_pet_name(pet_name)
+    print("2 " + context.pet.get_pet_name())
     context.pet.set_pet_status(status)
     photoUrls = []
     photoUrls.append(photoUrl)
