@@ -16,6 +16,8 @@ def step_impl(context, http_request_type, endpoint):
     context.requestConfigManager = RequestConfigManager()
     if 'GET' == http_request_type:
         context.requestConfigManager.set_endpoint(endpoint + "/" + str(context.pet.get_pet_id()))
+    elif 'GET FINDBYSTATUS' == http_request_type:
+        context.requestConfigManager.set_endpoint(endpoint + "?status=" )
     elif 'POST' == http_request_type:
         context.requestConfigManager.set_endpoint(endpoint)
     elif 'PUT' == http_request_type:
@@ -42,10 +44,10 @@ def step_impl(context, particular, value):
 
                 
 @when(u'Add pet "{status}"')
+@when(u'Pet status is set as "{status}"')
 def step_impl(context, status):
     context.pet.set_pet_status(status)
 
-                    
 @when(u'Set BODY form param using pet details')
 def step_impl(context):
     context.requestConfigManager.set_http_request_body_with_pet_details(context.pet)

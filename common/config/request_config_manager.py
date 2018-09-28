@@ -68,7 +68,13 @@ class RequestConfigManager(object):
                                                                                          headers=self.http_request_header,
                                                                                          params=self.http_request_url_query_param,
                                                                                          data=self.http_request_body) 
-    
+
+        print("GET url is " + str(url_temp))
+        print("body : ")
+        print(self.http_request_body)
+        print("header is " + str(self.http_request_header))
+        print("query param is " + str(self.http_request_url_query_param))
+            
     def set_post_response_full(self, url_temp):
         self.http_request_url_query_param.clear()
         self.basic_config['response_full'] = requests.post(url_temp,

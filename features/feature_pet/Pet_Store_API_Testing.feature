@@ -47,7 +47,25 @@ Scenario: GET pet request using pet ID
 	And Response HEADER content type should be "application/json" 
 	And Response BODY should not be null or empty 
 	And Response BODY contains newly added pet details
-	
+
+Scenario Outline: GET pet request using pet status
+
+  Given "GET FINDBYSTATUS" api pet request endpoint was set as "pet/findByStatus" 
+  When Pet status is set as "<status>"
+    And Set HEADER params for request and response
+	And Raise "GET FINDBYSTATUS" HTTP request
+  Then Valid HTTP response should be received
+#  	And Validate response
+	And Response http code should be 200 
+	And Response HEADER content type should be "application/json" 
+	And Response BODY should not be null or empty 
+#	And Response BODY contains newly added pet details
+    Examples: Pets
+      | status |
+      | pending|
+      | available|
+      |sold|
+      		
 Scenario: DELETE pet request using pet ID
 
   Given "POST" api pet request endpoint was set as "pet"
