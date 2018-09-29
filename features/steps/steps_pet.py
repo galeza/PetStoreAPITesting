@@ -11,7 +11,7 @@ pet_details = {}
 
 
 # specific id
-@step(u'"{http_request_type}" api pet request endpoint was set as "{endpoint}"')
+@step(u'"{http_request_type}" api pet request endpoint is set as "{endpoint}"')
 def step_impl(context, http_request_type, endpoint):
     context.requestConfigManager = RequestConfigManager()
     if 'GET' == http_request_type:
@@ -28,27 +28,27 @@ def step_impl(context, http_request_type, endpoint):
     print(str(context.pet.get_pet_id))
 
 
-@when(u'Set pet details as "{particular}" and "{value}" below') 
-def step_impl(context, particular, value):
+@when(u'Pet details are specified as "{pet_property}" and "{value}" below') 
+def step_impl(context, pet_property, value):
     photoUrls = []
     for row in context.table:
-        if(row['particular']) == "photoUrls":
+        if(row['pet_property']) == "photoUrls":
             
             photoUrls.append(row['value'])
             
         else:
-            pet_details[row['particular']] = row['value']
+            pet_details[row['pet_property']] = row['value']
     if photoUrls.__len__() > 0:
         pet_details["photoUrls"] = photoUrls  
     context.pet.set_pet_details(pet_details)
 
                 
-@when(u'Add pet "{status}"')
+@when(u'Pet "{status}" is specified')
 @when(u'Pet status is set as "{status}"')
 def step_impl(context, status):
     context.pet.set_pet_status(status)
 
-@when(u'Set BODY form param using pet details')
+@when(u'Request BODY form parameters are set using pet details')
 def step_impl(context):
     context.requestConfigManager.set_http_request_body_with_pet_details(context.pet)
     
@@ -62,7 +62,7 @@ def step_impl(context):
 # TODO how to validate photoUrls
 
     
-@when(u'Set pet details as "{pet_name}" and "{photoUrl}" and "{status}"')
+@when(u'Pet details are specified as "{pet_name}" and "{photoUrl}" and "{status}"')
 def step_impl(context, pet_name, photoUrl, status):
     print("1 " + context.pet.get_pet_name())
     context.pet.set_pet_name(pet_name)
