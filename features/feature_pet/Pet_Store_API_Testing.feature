@@ -8,7 +8,7 @@ Background:
 Scenario Outline: Add new pet using POST request
   Given "POST" api pet request endpoint is set as "pet"
   When  HEADER params for request and response are specified
-	And Pet details are set as "<pet_property>" and "<value>" below
+	And Pet details are set as "<pet_property>" and "<value>"
 	
 		| pet_property                                   | value  |
 		| name                                           | Elwanek|

@@ -19,12 +19,12 @@ def step_impl(context, basic_url):
     context.requestConfigManager = RequestConfigManager()
     context.requestConfigManager.set_basic_url(basic_url)
     
-@when(u'Set HEADER param request content type as "{header_content_type}"')
+@when(u'HEADER param request content type is set as "{header_content_type}"')
 def step_impl(context, header_content_type):
     context.requestConfigManager.set_http_content_type(header_content_type)
 
 
-@when(u'Set HEADER param response accept type as "{header_accept_type}"')
+@when(u'HEADER param response accept type is set as "{header_accept_type}"')
 def step_impl(context, header_accept_type):
     context.requestConfigManager.set_http_accept_type(header_accept_type)
 
@@ -82,8 +82,8 @@ def step_impl(context):
         
 @when(u'HEADER params for request and response are specified')
 def step_impl(context):
-    context.execute_steps(u''' when Set HEADER param request content type as "application/json"
-    and Set HEADER param response accept type as "application/json" ''')
+    context.execute_steps(u''' when HEADER param request content type is set as "application/json"
+    and HEADER param response accept type is set as "application/json" ''')
         
         
         

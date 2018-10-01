@@ -28,7 +28,7 @@ def step_impl(context, http_request_type, endpoint):
     print(str(context.pet.get_pet_id))
 
 
-@when(u'Pet details are specified as "{pet_property}" and "{value}" below') 
+@when(u'Pet details are set as "{pet_property}" and "{value}"') 
 def step_impl(context, pet_property, value):
     photoUrls = []
     for row in context.table:
