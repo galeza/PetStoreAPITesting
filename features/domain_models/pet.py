@@ -19,6 +19,7 @@ class Pet(object):
     name = ""
     photoUrls = []
     status = ""
+    photo =""
 
     def get_pet_id(self):
         return  self.pet_id
@@ -40,7 +41,13 @@ class Pet(object):
     
     def set_pet_photoUrls(self, photoUrls):
         self.photoUrls = photoUrls
+
+    def get_pet_photo(self):
+        return self.photo
     
+    def set_pet_photo(self, photo):
+        self.photo = photo
+            
     def set_pet_details(self, pet_details):
         self.set_pet_name(pet_details.get("name"))
 #         for pet_URLS
@@ -52,7 +59,7 @@ class Pet(object):
         Constructor
         '''
         self.pet_id = RandomStringGenerator.generate_random_number_with_N_digits(6)
-        print("constructor = " + str(self.pet_id))
+#         print("constructor = " + str(self.pet_id))
 
         
         

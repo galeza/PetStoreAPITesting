@@ -24,7 +24,7 @@ if __name__ == '__main__':
     reportingRelated = ' -f allure_behave.formatter:AllureFormatter -o ' + reporting_folder_name + '  '
     #
     # feature file path
-    featureFilePath = ' feature_files_folder/Simple_REST_API_Testing.feature '
+    featureFilePath = ' features/feature_pet/Pet_Store_API_Testing.feature '
     #
     # tag option (currently not using any tag)
     tagOptions = ' --tags=-tag_me '

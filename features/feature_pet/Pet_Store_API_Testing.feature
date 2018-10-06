@@ -104,4 +104,21 @@ Scenario: UPDATE pet request using pet ID
 	And Response HEADER content type is "application/json" 
 	And Response BODY is not null or empty 	
 		
-	
+Scenario: UPLOAD pet photo/image POST request using pet ID
+
+  Given "POST" api pet request endpoint is set as "pet"
+  When HEADER params for request and response are specified
+	And Pet details are specified as "Elwanek" and "pending"
+	And Request BODY form parameters are set using pet details 
+	And "POST" HTTP request is raised
+    And Valid HTTP response is received 
+	And Response http code is 200 
+    And "POST UPLOADIMAGE" api pet request endpoint is set as "pet"	
+    And Photo is selected as "smallDog.jpeg"
+    And Request BODY form parameters are set using pet photo details 
+	And "POST UPLOADIMAGE" HTTP request is raised
+  Then Valid HTTP response is received
+#  	And Validate response
+	And Response http code is 200 
+	And Response HEADER content type is "application/json" 
+	And Response BODY is not null or empty 		

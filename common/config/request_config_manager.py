@@ -21,6 +21,8 @@ class RequestConfigManager(object):
     http_request_header = {}
     http_request_body = {}
     http_request_url_query_param = {}
+    multipart_data ={}
+    
 
     def __init__(self):
         '''
@@ -62,18 +64,21 @@ class RequestConfigManager(object):
 
     def clear_http_request_body(self):
         self.http_request_body.clear()
-        
+
+    def clear_http_request_header(self):
+        self.http_request_header.clear()
+               
     def set_get_response_full(self, url_temp):
         self.basic_config['response_full'] = requests.get(url_temp,
                                                                                          headers=self.http_request_header,
                                                                                          params=self.http_request_url_query_param,
                                                                                          data=self.http_request_body) 
 
-        print("GET url is " + str(url_temp))
-        print("body : ")
-        print(self.http_request_body)
-        print("header is " + str(self.http_request_header))
-        print("query param is " + str(self.http_request_url_query_param))
+#         print("GET url is " + str(url_temp))
+#         print("body : ")
+#         print(self.http_request_body)
+#         print("header is " + str(self.http_request_header))
+#         print("query param is " + str(self.http_request_url_query_param))
             
     def set_post_response_full(self, url_temp):
         self.http_request_url_query_param.clear()
@@ -81,23 +86,36 @@ class RequestConfigManager(object):
                                                                                          headers=self.http_request_header,
                                                                                          params=self.http_request_url_query_param,
                                                                                          json=self.http_request_body) 
-        print("post url is " + str(url_temp))
-        print("body : ")
-        print(self.http_request_body)
-        print("header is " + str(self.http_request_header))
-        print("query param is " + str(self.http_request_url_query_param))
- 
+#         print("post url is " + str(url_temp))
+#         print("body : ")
+#         print(self.http_request_body)
+#         print("header is " + str(self.http_request_header))
+#         print("query param is " + str(self.http_request_url_query_param))
+
+    def set_post_uploadimage_response_full(self, url_temp):
+        self.http_request_url_query_param.clear()
+#         self.clear_http_request_header()
+        self.basic_config['response_full'] = requests.post(url_temp,files=self.multipart_data) 
+#         print("TEXT: " + self.basic_config['response_full'].text)
+#         print("post upload image is is " + str(url_temp))
+#         print("files : ")
+#         print(self.http_request_body)
+#         print("multipart : ")
+#         print(self.multipart_data)
+#         print("header is " + str(self.http_request_header))
+#         print("query param is " + str(self.http_request_url_query_param))
+#          
     def set_delete_response_full(self, url_temp):
         self.http_request_url_query_param.clear()
         self.basic_config['response_full'] = requests.delete(url_temp,
                                                                                          headers=self.http_request_header,
                                                                                          params=self.http_request_url_query_param,
                                                                                          json=self.http_request_body) 
-        print("url is " + str(url_temp))
-        print("body : ")
-        print(self.http_request_body)
-        print("header is " + str(self.http_request_header))
-        print("query param is " + str(self.http_request_url_query_param))
+#         print("url is " + str(url_temp))
+#         print("body : ")
+#         print(self.http_request_body)
+#         print("header is " + str(self.http_request_header))
+#         print("query param is " + str(self.http_request_url_query_param))
 
     def set_put_response_full(self, url_temp):
         self.http_request_url_query_param.clear()
@@ -105,11 +123,11 @@ class RequestConfigManager(object):
                                                                                          headers=self.http_request_header,
                                                                                          params=self.http_request_url_query_param,
                                                                                          json=self.http_request_body) 
-        print("put url is " + str(url_temp))
-        print("body : ")
-        print(self.http_request_body)
-        print("header is " + str(self.http_request_header))
-        print("query param is " + str(self.http_request_url_query_param))
+#         print("put url is " + str(url_temp))
+#         print("body : ")
+#         print(self.http_request_body)
+#         print("header is " + str(self.http_request_header))
+#         print("query param is " + str(self.http_request_url_query_param))
                         
     def get_response_full(self):
         return self.basic_config['response_full']  
@@ -139,9 +157,16 @@ class RequestConfigManager(object):
     
     def set_http_request_body_with_pet_details(self, pet):
         self.http_request_body['id'] = pet.get_pet_id()
-        print(pet.get_pet_id())
+#         print(pet.get_pet_id())
         self.http_request_body['name'] = pet.get_pet_name()
         self.http_request_body['photoUrls'] = pet.get_pet_photoUrls()
         self.http_request_body['status'] = pet.get_pet_status()
+
+    def set_http_request_body_with_pet_photo(self, pet):
+        self.clear_http_request_body()
+
+        self.multipart_data = {
+            'file': (pet.get_pet_photo(), open('./' + pet.get_pet_photo(), 'rb'), 'image/jpeg'),
+           }
 
 

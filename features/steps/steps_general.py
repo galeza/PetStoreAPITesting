@@ -44,7 +44,10 @@ def step_impl(context, http_request_type):
         url_temp += context.requestConfigManager.get_endpoint()
 #         context.requestConfigManager.clear_http_request_body()
         context.requestConfigManager.set_post_response_full(url_temp)
-        
+    elif 'POST UPLOADIMAGE' == http_request_type:
+        url_temp += context.requestConfigManager.get_endpoint()
+#         context.requestConfigManager.clear_http_request_body()
+        context.requestConfigManager.set_post_uploadimage_response_full(url_temp)        
     elif 'PUT' == http_request_type:
         url_temp += context.requestConfigManager.get_endpoint()
         context.requestConfigManager.set_put_response_full(url_temp)

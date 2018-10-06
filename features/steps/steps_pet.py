@@ -20,6 +20,8 @@ def step_impl(context, http_request_type, endpoint):
         context.requestConfigManager.set_endpoint(endpoint + "?status=" )
     elif 'POST' == http_request_type:
         context.requestConfigManager.set_endpoint(endpoint)
+    elif 'POST UPLOADIMAGE' == http_request_type:
+        context.requestConfigManager.set_endpoint(endpoint+ "/" + str(context.pet.get_pet_id()) + "/" + "uploadImage")
     elif 'PUT' == http_request_type:
         context.requestConfigManager.set_endpoint(endpoint)
     elif 'DELETE' == http_request_type:
@@ -51,8 +53,15 @@ def step_impl(context, status):
 @when(u'Request BODY form parameters are set using pet details')
 def step_impl(context):
     context.requestConfigManager.set_http_request_body_with_pet_details(context.pet)
-    
-    
+
+@when(u'Request BODY form parameters are set using pet photo details')
+def step_impl(context):
+    context.requestConfigManager.set_http_request_body_with_pet_photo(context.pet)
+        
+@when(u'Photo is selected as "{photo}"')
+def step_impl(context, photo):
+    context.pet.set_pet_photo(photo)
+        
 @then(u'Response BODY contains newly added pet details')
 def step_impl(context):
     added_pet_json = context.requestConfigManager.get_response_full_json()
@@ -71,4 +80,15 @@ def step_impl(context, pet_name, photoUrl, status):
     photoUrls = []
     photoUrls.append(photoUrl)
     context.pet.set_pet_photoUrls(photoUrls)
+
+@when(u'Pet details are specified as "{pet_name}" and "{status}"')
+def step_impl(context, pet_name, status):
+    #TODO one step
+    context.pet.set_pet_name(pet_name)
+    context.pet.set_pet_status(status)
+
     
+# def set_pet_photo(photoUrl):
+#     photoUrls = []
+#     photoUrls.append(photoUrl)
+#     context.pet.set_pet_photoUrls(photoUrls)
