@@ -59,8 +59,7 @@ Scenario Outline: GET pet request using pet status
 	And Response http code is 200 
 	And Response HEADER content type is "application/json" 
 	And Response BODY is not null or empty 
-	#TODO validations
-#	And Response BODY contains newly added pet details
+	And Response BODY pet status is equal to pet status
     Examples: Pets
       | status |
       | pending|
@@ -108,7 +107,7 @@ Scenario: UPLOAD pet photo/image POST request using pet ID
 
   Given "POST" api pet request endpoint is set as "pet"
   When HEADER params for request and response are specified
-	And Pet details are specified as "Elwanek" and "pending"
+	And Pet details are specified as "Maja" and "pending"
 	And Request BODY form parameters are set using pet details 
 	And "POST" HTTP request is raised
     And Valid HTTP response is received 
@@ -122,3 +121,4 @@ Scenario: UPLOAD pet photo/image POST request using pet ID
 	And Response http code is 200 
 	And Response HEADER content type is "application/json" 
 	And Response BODY is not null or empty 		
+	And Response BODY contains uploaded file name

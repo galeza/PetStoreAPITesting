@@ -52,12 +52,6 @@ class RequestConfigManager(object):
     
     def get_endpoint(self):
         return self.basic_config['api_endpoint']       
- 
-#     def set_POST_endpoint(self, post_api_endpoint):
-#         self.basic_config['POST_api_endpoint'] = post_api_endpoint
-#     
-#     def get_POST_endpoint(self):
-#         return self.basic_config['POST_api_endpoint']   
        
     def get_http_request_body(self):
         return self.http_request_body
