@@ -74,7 +74,7 @@ def step_impl(context):
 @then(u'Response BODY pet status is equal to pet status')
 def step_impl(context):
     added_pet_json = context.requestConfigManager.get_response_full_json()
-    assert_that(added_pet_json['status'], equal_to(context.pet.get_pet_status()))
+    assert_that(added_pet_json[0]['status'], equal_to(context.pet.get_pet_status()))
     
     
 @when(u'Pet details are specified as "{pet_name}" and "{photoUrl}" and "{status}"')

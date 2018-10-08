@@ -4,6 +4,7 @@ Created on Sep 14, 2018
 @author: agagaleza
 '''
 import requests
+import logging
 
 class Singleton(object):
     _instances = {}
@@ -22,12 +23,15 @@ class RequestConfigManager(object):
     http_request_body = {}
     http_request_url_query_param = {}
     multipart_data ={}
+#     logger = logging.getLogger(__name__)
+    
     
 
     def __init__(self):
         '''
         Constructor
         '''
+        self.configure_logger()
     
     def set_basic_url(self, basic_url):
         self.basic_config['basic_url'] = basic_url
@@ -162,5 +166,6 @@ class RequestConfigManager(object):
         self.multipart_data = {
             'file': (pet.get_pet_photo(), open('./' + pet.get_pet_photo(), 'rb'), 'image/jpeg'),
            }
-
+    def configure_logger(self):
+        logging.basicConfig(format='%(asctime)s - %(name)s - %(levelname)s - %(message)s', level=logging.INFO)
 
