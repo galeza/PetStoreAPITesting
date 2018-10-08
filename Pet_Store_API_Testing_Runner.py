@@ -19,6 +19,7 @@ if __name__ == '__main__':
     if os.path.exists(reporting_folder_name):
         rmtree(reporting_folder_name)
     os.makedirs(reporting_folder_name)
+#     os.chdir('./features')
     #
     # allure reporting related command line arguments
     reportingRelated = ' -f allure_behave.formatter:AllureFormatter -o ' + reporting_folder_name + '  '
@@ -39,6 +40,7 @@ if __name__ == '__main__':
     # run Behave + BDD + Python code
     runner_with_options.main(fullRunnerOptions)
     #
+#     os.chdir('..')
     # read resultant json file
     listOfJsonFiles = glob.glob(reporting_folder_name + "/*.json")
     finalJson = ''
