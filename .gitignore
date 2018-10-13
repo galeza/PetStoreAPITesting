@@ -12,9 +12,14 @@ local.properties
 
 #test reports
 *report.html
+reporting_folder_json_html
 
 # Eclipse Core
 .project
+
+# Vim
+*.swp
+*.swo
 
 # OS generated files #
 ######################

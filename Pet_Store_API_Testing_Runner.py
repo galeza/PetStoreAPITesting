@@ -25,7 +25,10 @@ if __name__ == '__main__':
     reportingRelated = ' -f allure_behave.formatter:AllureFormatter -o ' + reporting_folder_name + '  '
     #
     # feature file path
-    featureFilePath = ' features/feature_pet/Pet_Store_API_Testing.feature '
+    #for console
+    featureFilePath = './features/feature_pet/ '
+    #for eclipse
+#     featureFilePath = 'Pet_Store_API_Testing.feature'
     #
     # tag option (currently not using any tag)
     tagOptions = ' --tags=-tag_me '
@@ -35,6 +38,7 @@ if __name__ == '__main__':
     commonRunnerOptions = ' --no-capture --no-capture-stderr -f plain '
     #
     # full list of command line options
+    print(os.getcwd())
     fullRunnerOptions = tagOptions + featureFilePath + reportingRelated + commonRunnerOptions
     #
     # run Behave + BDD + Python code
