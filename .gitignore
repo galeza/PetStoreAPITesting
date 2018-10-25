@@ -13,6 +13,7 @@ local.properties
 #test reports
 *report.html
 reporting_folder_json_html
+results
 
 # Eclipse Core
 .project

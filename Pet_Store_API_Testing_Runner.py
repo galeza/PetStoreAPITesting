@@ -10,6 +10,7 @@ import sys
 import os
 from shutil import rmtree
 from behave import __main__ as runner_with_options
+import json
 
 if __name__ == '__main__':
     sys.stdout.flush()
@@ -57,6 +58,10 @@ if __name__ == '__main__':
     #
     # convert json to html using simple utility and publish report
     html_content = json2html.convert(json=finalJson)
+    data = json.loads(finalJson)
+    print(finalJson)
+#     print(data)
     html_report_file = open(reporting_folder_name + '/' + 'index.html', 'w')
     html_report_file.write(html_content)
     html_report_file.close()
+#     HTMLTestRunner.HTMLTestRunner(stream = html_report_file, verbosity = 2, title="SmsEagle API Regression Suite")
