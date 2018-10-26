@@ -9,7 +9,8 @@ class Constant(object):
     Manages shared constants for tests
     '''
 
-
+    PASSED = 'passed'
+    FAILED = 'failed'
 
 
       
