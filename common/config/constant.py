@@ -11,6 +11,19 @@ class Constant(object):
 
     PASSED = 'passed'
     FAILED = 'failed'
+    
+    #json columns
+    SCENARIO = 'Scenario_'
+    START = 'start'
+    STOP = 'stop'
+    STATUS = 'status'
+    STEPS = 'steps'
+    NAME = 'name'
+    STATUS_DETAILS = 'statusDetails'
+    MESSAGE = 'message'
+    TRACE = 'trace'
+    
+    
 
 
       

@@ -27,9 +27,9 @@ class ReportGenerator(object):
         start_time = datetime.utcnow()
         duration = 0
         try:
-            start_time = json_data[0]['Scenario_0']["start"]
+            start_time = json_data[0][Constant.SCENARIO + '0'][Constant.START]
             self.logger.info(self.format_unix_timestamp(start_time / 1000, '%Y-%m-%d %H:%M:%S'))
-            end_time = int(json_data[-1]["Scenario_"+ str(len(json_data) - 1)]["stop"])
+            end_time = int(json_data[-1][Constant.SCENARIO+ str(len(json_data) - 1)][Constant.STOP])
             self.logger.info(self.format_unix_timestamp(end_time / 1000, '%Y-%m-%d %H:%M:%S'))
             duration = end_time - start_time
             self.logger.info(duration)
@@ -39,7 +39,7 @@ class ReportGenerator(object):
             error = 0
             for x in json_data:
                 for scenario in x:
-                    result = ReportConstants.STATUS[x[scenario]["status"]]
+                    result = ReportConstants.STATUS[x[scenario][Constant.STATUS]]
                     if result == Constant.PASSED:
                         passed = passed +1
                     elif result == Constant.FAILED:
@@ -109,15 +109,15 @@ class ReportGenerator(object):
         total_error = 0
         for scenario in json_data:
             np = nf = ne = 0
-            for step in scenario['Scenario_' + str(scenario_id)]['steps']:
-                if step['status'] == Constant.PASSED: np += 1
-                elif step['status'] == Constant.FAILED: nf += 1
+            for step in scenario[Constant.SCENARIO + str(scenario_id)][Constant.STEPS]:
+                if step[Constant.STATUS] == Constant.PASSED: np += 1
+                elif step[Constant.STATUS] == Constant.FAILED: nf += 1
                 else: ne += 1
         
 
             row = ReportConstants.REPORT_CLASS_TMPL % dict(
                 style=ne > 0 and 'errorClass' or nf > 0 and 'failClass' or 'passClass',
-                desc=scenario['Scenario_' + str(scenario_id)]['name'],
+                desc=scenario[Constant.SCENARIO + str(scenario_id)][Constant.NAME],
                 count=np + nf + ne,
                 Pass=np,
                 fail=nf,
@@ -126,7 +126,7 @@ class ReportGenerator(object):
             )
             rows.append(row)
             step_id = 1
-            for step in scenario['Scenario_' + str(scenario_id)]['steps']:
+            for step in scenario[Constant.SCENARIO + str(scenario_id)][Constant.STEPS]:
                 self._generate_report_test(rows, scenario_id,step, step_id, step_id)
                 step_id +=1
             scenario_id +=  1
@@ -144,17 +144,17 @@ class ReportGenerator(object):
         return report
 
     def _generate_report_test(self, rows, cid,step, tid, name):
-        status = ReportConstants.STATUS[step["status"]]
+        status = ReportConstants.STATUS[step[Constant.STATUS]]
         has_output = bool(status != Constant.PASSED)
         tid = status + ' t%s.%s' % (cid+1,tid)
-        doc = step["name"]
+        doc = step[Constant.NAME]
         desc = doc and ('%s: %s' % (name, doc)) or name
         tmpl = has_output and ReportConstants.REPORT_TEST_WITH_OUTPUT_TMPL or ReportConstants.REPORT_TEST_NO_OUTPUT_TMPL
         uo = ''
         ue = ''
         try:
-            uo = step['statusDetails']['message']
-            ue = step['statusDetails']['trace']
+            uo = step[Constant.STATUS_DETAILS][Constant.MESSAGE]
+            ue = step[Constant.STATUS_DETAILS][Constant.TRACE]
         except KeyError:
             pass
 
