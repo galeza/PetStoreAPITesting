@@ -28,10 +28,11 @@ class ReportGenerator(object):
         duration = 0
         try:
             start_time = json_data[0]['Scenario_0']["start"]
-            self.logger.info(start_time)
+            self.logger.info(self.format_unix_timestamp(start_time / 1000, '%Y-%m-%d %H:%M:%S'))
             end_time = int(json_data[-1]["Scenario_"+ str(len(json_data) - 1)]["stop"])
-            self.logger.info(end_time)
+            self.logger.info(self.format_unix_timestamp(end_time / 1000, '%Y-%m-%d %H:%M:%S'))
             duration = end_time - start_time
+            self.logger.info(duration)
             status = []
             passed = 0
             failure = 0
@@ -57,8 +58,9 @@ class ReportGenerator(object):
             self.logger.info('Empty results')
         except IndexError:
             self.logger.info('Empty results')
+        self.logger.info(self.convert_miliseconds(duration))
         return [
-            ('Start Time', self.format_unix_timestamp(start_time / 1000, '%Y-%m-%dT%H:%M:%SZ')),
+            ('Start Time', self.format_unix_timestamp(start_time / 1000, '%Y-%m-%d %H:%M:%S')),
             ('Duration', str(self.convert_miliseconds(duration))),
             ('Status', status),
         ]
@@ -195,7 +197,7 @@ class ReportGenerator(object):
         m,s=divmod(s,60)
         h,m=divmod(m,60)
         d,h=divmod(h,24)
-        s=10
+        
         return "%d days %02d:%02d:%02d" % (d,h,m,s) 
     
 
