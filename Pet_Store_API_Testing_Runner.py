@@ -20,6 +20,7 @@ from reporting.report_generator import ReportGenerator
 from datetime import datetime
 import collections
 import logging
+from common.config.constant import Constant
 
 if __name__ == '__main__':
     #read feature file path from console
@@ -56,15 +57,15 @@ if __name__ == '__main__':
     scenario_dict = {}
     for cnt in range(0, len(listOfJsonFiles)):
         scenario_data = json.loads(open(listOfJsonFiles[cnt], 'r').read())
-        start_time = int(scenario_data['start'])
+        start_time = int(scenario_data[Constant.START])
         scenario_dict[start_time] = scenario_data
     data = []
     index = 0
     for start_time in collections.OrderedDict(sorted(scenario_dict.items())):
         logger.info(str(start_time))
-        logger.info(scenario_dict[start_time]['name'])
+        logger.info(scenario_dict[start_time][Constant.NAME])
         scenario_data = {}
-        scenario_data["Scenario_" + str(index)] = scenario_dict[start_time]
+        scenario_data[Constant.SCENARIO + str(index)] = scenario_dict[start_time]
         data.append(scenario_data)
         index +=1
         
