@@ -11,6 +11,8 @@ class Constant(object):
 
     PASSED = 'passed'
     FAILED = 'failed'
+    SKIPPED = 'skipped'
+    ERROR = 'error'
     
     #json columns
     SCENARIO = 'Scenario_'

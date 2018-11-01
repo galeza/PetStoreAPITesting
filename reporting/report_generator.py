@@ -33,22 +33,18 @@ class ReportGenerator(object):
             self.logger.info(self.format_unix_timestamp(end_time / 1000, '%Y-%m-%d %H:%M:%S'))
             duration = end_time - start_time
             self.logger.info(duration)
+            counters = {Constant.PASSED:0, Constant.FAILED:0, Constant.SKIPPED:0, Constant.ERROR:0}
+            
             status = []
-            passed = 0
-            failure = 0
-            error = 0
+
             for x in json_data:
                 for scenario in x:
                     result = ReportConstants.STATUS[x[scenario][Constant.STATUS]]
-                    if result == Constant.PASSED:
-                        passed = passed +1
-                    elif result == Constant.FAILED:
-                        failure = failure +1
-                    else:
-                        error = error +1
-            status.append('Pass %s'    % passed)
-            status.append('Failure %s'    % failure)
-            status.append('Error %s'    % error)
+                    counters[result] +=1
+
+            for cnt in counters:
+                status.append(cnt.title() + ' %s' % counters[cnt])
+
 
             if status:
                 status = ' '.join(status)
@@ -88,6 +84,8 @@ class ReportGenerator(object):
     def _generate_heading(self, report_attrs):
         a_lines = []
         for name, value in report_attrs:
+            self.logger.info('name ' + str(name))
+            self.logger.info('value' + str(value))
             line = ReportConstants.HEADING_ATTRIBUTE_TMPL % dict(
                     name=saxutils.escape(name),
                     value=saxutils.escape(value),
@@ -107,21 +105,26 @@ class ReportGenerator(object):
         total_passed = 0
         total_failed = 0
         total_error = 0
+        total_skipped = 0
         for scenario in json_data:
-            np = nf = ne = 0
+            counters = {Constant.PASSED:0, Constant.FAILED:0, Constant.SKIPPED:0, Constant.ERROR:0}
+#             np = nf = ne =ns= 0
             for step in scenario[Constant.SCENARIO + str(scenario_id)][Constant.STEPS]:
-                if step[Constant.STATUS] == Constant.PASSED: np += 1
-                elif step[Constant.STATUS] == Constant.FAILED: nf += 1
-                else: ne += 1
+                counters[step[Constant.STATUS]] +=1
+#                 if step[Constant.STATUS] == Constant.PASSED: np += 1
+#                 elif step[Constant.STATUS] == Constant.FAILED: nf += 1
+#                 elif 
+#                 else: ne += 1
         
 
             row = ReportConstants.REPORT_CLASS_TMPL % dict(
-                style=ne > 0 and 'errorClass' or nf > 0 and 'failClass' or 'passClass',
+                style=counters[Constant.ERROR] > 0 and 'errorClass' or counters[Constant.SKIPPED] > 0 and 'skippedClass'or counters[Constant.FAILED] > 0 and 'failClass' or 'passClass',
                 desc=scenario[Constant.SCENARIO + str(scenario_id)][Constant.NAME],
-                count=np + nf + ne,
-                Pass=np,
-                fail=nf,
-                error=ne,
+                count=sum(counters.values()),
+                Pass=counters[Constant.PASSED],
+                fail=counters[Constant.FAILED],
+                error=counters[Constant.ERROR],
+                skipped = counters[Constant.SKIPPED],
                 cid='c%s' % (scenario_id + 1),
             )
             rows.append(row)
@@ -130,15 +133,17 @@ class ReportGenerator(object):
                 self._generate_report_test(rows, scenario_id,step, step_id, step_id)
                 step_id +=1
             scenario_id +=  1
-            total_passed +=np
-            total_failed += nf
-            total_error += ne
+            total_passed +=counters[Constant.PASSED]
+            total_failed += counters[Constant.FAILED]
+            total_error += counters[Constant.ERROR]
+            total_skipped +=counters[Constant.SKIPPED]
         report = ReportConstants.REPORT_TMPL % dict(
             test_list=''.join(rows),
             count=str(total_passed + total_failed + total_error),
             Pass=str(total_passed),
             fail=str(total_failed),
             error=str(total_error),
+            skipped = str(total_skipped)
             )
           
         return report
@@ -169,6 +174,9 @@ class ReportGenerator(object):
         style_str = 'none'
         if status == 'failed':
             style_str = 'failCase'
+        elif status == 'skipped':
+            style_str = 'skippedCase'
+            class_str = 'hiddenRow'
         elif status != 'passed':
             style_str = 'errorCase'
         else:

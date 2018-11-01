@@ -15,6 +15,7 @@ class ReportConstants(object):
         'passed': 'passed',
         'broken': 'failed',
         'error': 'error',
+        'skipped':'skipped'
         }
 
     DEFAULT_TITLE = 'Pet Store Test Report'
@@ -47,7 +48,7 @@ function showCase(level) {
                 tr.className = '';
             }
         }
-        if (id.substr(0,6) == 'passed') {
+        if (id.substr(0,6) == 'passed' || d.substr(0,7) == 'skipped') {
             if (level > 1) {
                 tr.className = '';
             }
@@ -66,6 +67,10 @@ function showClassDetail(cid, count) {
         tid0 = 't' + cid.substr(1) + '.' + (i+1);
         tid = 'failed ' + tid0;
         tr = document.getElementById(tid);
+        if (!tr) {
+            tid = 'skipped ' + tid0;
+            tr = document.getElementById(tid);
+        }
         if (!tr) {
             tid = 'passed ' + tid0;
             tr = document.getElementById(tid);
@@ -210,8 +215,10 @@ a.popup_link:hover {
 }
 #total_row  { font-weight: bold; }
 .passClass  { background-color: #6c6; }
+.skippedClass  { background-color: #dbe1db; }
 .failClass  { background-color: #c60; }
 .errorClass { background-color: #c00; }
+.skippedCase  { background-color: #dbe1db; }
 .passCase   { color: #6c6; }
 .failCase   { color: #c60; font-weight: bold; }
 .errorCase  { color: #c00; font-weight: bold; }
@@ -265,6 +272,7 @@ a.popup_link:hover {
     <td>Count</td>
     <td>Pass</td>
     <td>Fail</td>
+    <td>Skipped</td>
     <td>Error</td>
     <td>View</td>
 </tr>
@@ -274,6 +282,7 @@ a.popup_link:hover {
     <td>%(count)s</td>
     <td>%(Pass)s</td>
     <td>%(fail)s</td>
+    <td>%(skipped)s</td>
     <td>%(error)s</td>
     <td>&nbsp;</td>
 </tr>
@@ -286,6 +295,7 @@ a.popup_link:hover {
     <td>%(count)s</td>
     <td>%(Pass)s</td>
     <td>%(fail)s</td>
+    <td>%(skipped)s</td>
     <td>%(error)s</td>
     <td><a href="javascript:showClassDetail('%(cid)s',%(count)s)">Detail</a></td>
 </tr>
@@ -294,7 +304,7 @@ a.popup_link:hover {
     REPORT_TEST_WITH_OUTPUT_TMPL = r"""
 <tr id='%(tid)s' class='%(Class)s'>
     <td class='%(style)s'><div class='testcase'>%(desc)s</div></td>
-    <td colspan='5' align='center'>
+    <td colspan='6' align='center'>
 
     <!--css div popup start-->
     <a class="popup_link" onfocus='this.blur();' href="javascript:showTestDetail('div_%(tid)s')" >
@@ -318,7 +328,7 @@ a.popup_link:hover {
     REPORT_TEST_NO_OUTPUT_TMPL = r"""
 <tr id='%(tid)s' class='%(Class)s'>
     <td class='%(style)s'><div class='testcase'>%(desc)s</div></td>
-    <td colspan='5' align='center'>%(status)s</td>
+    <td colspan='6' align='center'>%(status)s</td>
 </tr>
 """  # variables: (tid, Class, style, desc, status)
 
