@@ -5,6 +5,7 @@ Created on Sep 15, 2018
 '''
 
 from common.util.random_string_generator import RandomStringGenerator
+import logging
 
 # -----------------------------------------------------------------------------
 # DOMAIN-MODEL:
@@ -20,6 +21,7 @@ class Pet(object):
     photoUrls = []
     status = ""
     photo =""
+    logger = logging.getLogger(__name__)
 
     def get_pet_id(self):
         return  self.pet_id
@@ -59,7 +61,7 @@ class Pet(object):
         Constructor
         '''
         self.pet_id = RandomStringGenerator.generate_random_number_with_N_digits(6)
-#         print("constructor = " + str(self.pet_id))
+        self.logger.info(str(self.pet_id))
 
         
         

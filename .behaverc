@@ -1,0 +1,8 @@
+[behave]
+stderr_capture=False
+stdout_capture=False
+log_capture=False
+show_timings=True
+verbose=True
+color =True
+paths=features/

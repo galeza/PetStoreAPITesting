@@ -7,6 +7,7 @@ Created on Sep 10, 2018
 from common.config.request_config_manager import RequestConfigManager
 from behave import given, when, then, step
 from features.domain_models.pet import Pet
+from hamcrest import assert_that, equal_to
 
 
 @given(u'Swagger PetStore web application url is set as "{basic_url}"')
@@ -60,14 +61,16 @@ def step_impl(context, http_request_type):
 @step(u'Valid HTTP response is received')
 def step_impl(context):
     if None in context.requestConfigManager.get_response_full():
-        assert False, 'Null response received'
+        assert_that('Null response received')
+#         assert False, 'Null response received'
         
 @step(u'Response http code is {expected_response_code:d}')
 def step_impl(context, expected_response_code):
     context.requestConfigManager.set_expected_response_code(expected_response_code)
     actual_response_code = context.requestConfigManager.get_response_full_status_code()
     if str(actual_response_code) not in str(expected_response_code):
-        assert False, '***ERROR: Following unexpected error response code received: ' + str(actual_response_code)
+        assert_that('***ERROR: Following unexpected error response code received: ' + str(actual_response_code))
+#         assert False, '***ERROR: Following unexpected error response code received: ' + str(actual_response_code)
 
 
 @then(u'Response HEADER content type is "{expected_response_content_type}"')
@@ -75,13 +78,15 @@ def step_impl(context, expected_response_content_type):
     context.requestConfigManager.set_expected_response_content_type(expected_response_content_type)
     actual_response_content_type = context.requestConfigManager.get_response_full_content_type()
     if expected_response_content_type not in actual_response_content_type:
-        assert False, '***ERROR: Following unexpected error response content type received: ' + actual_response_content_type
+        assert_that('***ERROR: Following unexpected error response content type received: ' + actual_response_content_type)
+#         assert False, '***ERROR: Following unexpected error response content type received: ' + actual_response_content_type
 
 
 @then(u'Response BODY is not null or empty')
 def step_impl(context):
     if None in context.requestConfigManager.get_response_full():
-        assert False, '***ERROR:  Null or none response body received'
+        assert_that('***ERROR:  Null or none response body received')
+#         assert False, '***ERROR:  Null or none response body received'
         
 @when(u'HEADER params for request and response are specified')
 def step_impl(context):

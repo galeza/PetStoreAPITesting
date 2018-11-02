@@ -6,6 +6,7 @@ Created on Sep 10, 2018
 '''
 from behave import given, when, then, step
 from common.config.request_config_manager import RequestConfigManager
+from hamcrest import assert_that, equal_to, contains_string
 
 pet_details = {}
 
@@ -65,11 +66,16 @@ def step_impl(context, photo):
 @then(u'Response BODY contains newly added pet details')
 def step_impl(context):
     added_pet_json = context.requestConfigManager.get_response_full_json()
-    assert(added_pet_json['status'] == context.pet.get_pet_status())
-    assert(added_pet_json['name'] == context.pet.get_pet_name())
-    assert(added_pet_json['id'] == context.pet.get_pet_id())
-# TODO how to validate photoUrls
+    assert_that(added_pet_json['status'], equal_to(context.pet.get_pet_status()))
+    assert_that(added_pet_json['name'], equal_to(context.pet.get_pet_name()))
+    assert_that(added_pet_json['id'], equal_to(context.pet.get_pet_id()))
+    assert_that(added_pet_json['photoUrls'], equal_to(context.pet.get_pet_photoUrls()))
 
+@then(u'Response BODY pet status is equal to pet status')
+def step_impl(context):
+    added_pet_json = context.requestConfigManager.get_response_full_json()
+    assert_that(added_pet_json[0]['status'], equal_to(context.pet.get_pet_status()))
+    
     
 @when(u'Pet details are specified as "{pet_name}" and "{photoUrl}" and "{status}"')
 def step_impl(context, pet_name, photoUrl, status):
@@ -87,8 +93,8 @@ def step_impl(context, pet_name, status):
     context.pet.set_pet_name(pet_name)
     context.pet.set_pet_status(status)
 
-    
-# def set_pet_photo(photoUrl):
-#     photoUrls = []
-#     photoUrls.append(photoUrl)
-#     context.pet.set_pet_photoUrls(photoUrls)
+@step(u'Response BODY contains uploaded file name')
+def step_impl(context):
+    added_pet_json = context.requestConfigManager.get_response_full_json()
+    assert_that(added_pet_json['message'], contains_string(context.pet.get_pet_photo()))
+      
