@@ -150,7 +150,7 @@ class ReportGenerator(object):
 
     def _generate_report_test(self, rows, cid,step, tid, name):
         status = ReportConstants.STATUS[step[Constant.STATUS]]
-        has_output = bool(status != Constant.PASSED)
+        has_output = bool(status != Constant.PASSED and status != Constant.SKIPPED)
         tid = status + ' t%s.%s' % (cid+1,tid)
         doc = step[Constant.NAME]
         desc = doc and ('%s: %s' % (name, doc)) or name

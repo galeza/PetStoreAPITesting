@@ -83,7 +83,11 @@ function showClassDetail(cid, count) {
     for (var i = 0; i < count; i++) {
         tid = id_list[i];
         if (toHide) {
-            document.getElementById('div_'+tid).style.display = 'none'
+            elem = document.getElementById('div_'+tid)
+            if(elem)
+            {
+                elem.style.display = 'none'
+            }
             document.getElementById(tid).className = 'hiddenRow';
         }
         else {
@@ -218,7 +222,7 @@ a.popup_link:hover {
 .skippedClass  { background-color: #dbe1db; }
 .failClass  { background-color: #c60; }
 .errorClass { background-color: #c00; }
-.skippedCase  { background-color: #dbe1db; }
+.skippedCase  { color: #030903; }
 .passCase   { color: #6c6; }
 .failCase   { color: #c60; font-weight: bold; }
 .errorCase  { color: #c00; font-weight: bold; }
