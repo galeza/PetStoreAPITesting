@@ -8,6 +8,10 @@ featureFilePath = './features/feature_pet/ '
 #for eclipse
 featureFilePath = 'Pet_Store_API_Testing.feature'
 
+tagOptions = ' --tags=@smoke '
+
+python Pet_Store_API_Testing_Runner.py ./features/feature_pet/  --tags=@smoke
+
 '''
 
 import glob
@@ -24,8 +28,15 @@ from common.config.constant import Constant
 
 if __name__ == '__main__':
     #read feature file path from console
-    featureFilePath = sys.argv[1]
     logger = logging.getLogger(__name__)
+
+    tagOptions = ''
+    try:
+        featureFilePath = sys.argv[1]
+        tagOptions = ' ' + sys.argv[2] + ' ' 
+    except IndexError:
+        logger.error('tag or feature file was not provided')
+        
     sys.stdout.flush()
     test_date = str(datetime.now().strftime("%Y_%m_%d_%H%M"))
     reporting_folder_name = './reporting/results/' + test_date
@@ -39,7 +50,7 @@ if __name__ == '__main__':
     reportingRelated = ' -f allure_behave.formatter:AllureFormatter -o ' + reporting_folder_name + '  '
 
     # tag option (currently not using any tag)
-    tagOptions = ' --tags=@smoke '
+#     tagOptions = ' --tags=@smoke '
 #     tagOptions = ''
     #
     # command line argument to capture console output
