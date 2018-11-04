@@ -23,8 +23,6 @@ class RequestConfigManager(object):
     http_request_body = {}
     http_request_url_query_param = {}
     multipart_data ={}
-#     logger = logging.getLogger(__name__)
-    
     
 
     def __init__(self):
@@ -157,7 +155,7 @@ class RequestConfigManager(object):
         self.http_request_body['id'] = pet.get_pet_id()
 #         print(pet.get_pet_id())
         self.http_request_body['name'] = pet.get_pet_name()
-        self.http_request_body['photoUrls'] = pet.get_pet_photoUrls()
+        self.http_request_body['photoUrls'] = pet.get_pet_photourls()
         self.http_request_body['status'] = pet.get_pet_status()
 
     def set_http_request_body_with_pet_photo(self, pet):

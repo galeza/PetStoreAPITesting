@@ -62,7 +62,6 @@ def step_impl(context, http_request_type):
 def step_impl(context):
     if None in context.requestConfigManager.get_response_full():
         assert_that('Null response received')
-#         assert False, 'Null response received'
         
 @step(u'Response http code is {expected_response_code:d}')
 def step_impl(context, expected_response_code):
@@ -70,7 +69,6 @@ def step_impl(context, expected_response_code):
     actual_response_code = context.requestConfigManager.get_response_full_status_code()
     if str(actual_response_code) not in str(expected_response_code):
         assert_that('***ERROR: Following unexpected error response code received: ' + str(actual_response_code))
-#         assert False, '***ERROR: Following unexpected error response code received: ' + str(actual_response_code)
 
 
 @then(u'Response HEADER content type is "{expected_response_content_type}"')
@@ -79,14 +77,12 @@ def step_impl(context, expected_response_content_type):
     actual_response_content_type = context.requestConfigManager.get_response_full_content_type()
     if expected_response_content_type not in actual_response_content_type:
         assert_that('***ERROR: Following unexpected error response content type received: ' + actual_response_content_type)
-#         assert False, '***ERROR: Following unexpected error response content type received: ' + actual_response_content_type
 
 
 @then(u'Response BODY is not null or empty')
 def step_impl(context):
     if None in context.requestConfigManager.get_response_full():
         assert_that('***ERROR:  Null or none response body received')
-#         assert False, '***ERROR:  Null or none response body received'
         
 @when(u'HEADER params for request and response are specified')
 def step_impl(context):

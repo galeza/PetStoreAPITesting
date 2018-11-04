@@ -21,7 +21,7 @@ class RandomStringGenerator(object):
         return ''.join(str(random.randint(0,9)) for i in range(start_index,stop_index))
 
     @staticmethod
-    def generate_random_number_with_N_digits(lenght):
+    def generate_random_number_with_n_digits(lenght):
         range_start = 10**(lenght-1)
         range_end = (10**lenght)-1
         return randint(range_start, range_end)

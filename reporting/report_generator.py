@@ -61,7 +61,7 @@ class ReportGenerator(object):
             ('Status', status),
         ]
 
-    def generateReport(self, result):
+    def generate_report(self, result):
         report_attrs = self.get_attributes(result)
         generator = 'ReportGenerator %s' % ReportGenerator.__version__
         stylesheet = self._generate_stylesheet()
@@ -108,14 +108,8 @@ class ReportGenerator(object):
         total_skipped = 0
         for scenario in json_data:
             counters = {Constant.PASSED:0, Constant.FAILED:0, Constant.SKIPPED:0, Constant.ERROR:0}
-#             np = nf = ne =ns= 0
             for step in scenario[Constant.SCENARIO + str(scenario_id)][Constant.STEPS]:
                 counters[step[Constant.STATUS]] +=1
-#                 if step[Constant.STATUS] == Constant.PASSED: np += 1
-#                 elif step[Constant.STATUS] == Constant.FAILED: nf += 1
-#                 elif 
-#                 else: ne += 1
-        
 
             row = ReportConstants.REPORT_CLASS_TMPL % dict(
                 style=counters[Constant.ERROR] > 0 and 'errorClass' or counters[Constant.SKIPPED] > 0 and 'skippedClass'or counters[Constant.FAILED] > 0 and 'failClass' or 'passClass',

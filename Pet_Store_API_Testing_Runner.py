@@ -49,10 +49,6 @@ if __name__ == '__main__':
     # allure reporting related command line arguments
     reportingRelated = ' -f allure_behave.formatter:AllureFormatter -o ' + reporting_folder_name + '  '
 
-    # tag option (currently not using any tag)
-#     tagOptions = ' --tags=@smoke '
-#     tagOptions = ''
-    #
     # command line argument to capture console output
     commonRunnerOptions = ' --no-capture --no-capture-stderr -f plain '
     #
@@ -61,10 +57,9 @@ if __name__ == '__main__':
     #
     # run Behave + BDD + Python code
     runner_with_options.main(fullRunnerOptions)
-    #
+    
     # read resultant json file
     listOfJsonFiles = glob.glob(reporting_folder_name + "/*.json")
-#     finalJson = ''
     scenario_dict = {}
     for cnt in range(0, len(listOfJsonFiles)):
         scenario_data = json.loads(open(listOfJsonFiles[cnt], 'r').read())
@@ -79,8 +74,7 @@ if __name__ == '__main__':
         scenario_data[Constant.SCENARIO + str(index)] = scenario_dict[start_time]
         data.append(scenario_data)
         index +=1
-#     logger.info(str(start_time))   
-#     print(data)
+
     output = open(reporting_folder_name + '/' + str(datetime.now().strftime("%Y_%m_%d_%H%M_pet_store_api_report.html")), 'wb')
     generator = ReportGenerator(stream = output)
-    report = generator.generateReport(data)
+    report = generator.generate_report(data)
