@@ -48,7 +48,7 @@ function showCase(level) {
                 tr.className = '';
             }
         }
-        if (id.substr(0,6) == 'passed' || d.substr(0,7) == 'skipped') {
+        if (id.substr(0,6) == 'passed' || id.substr(0,7) == 'skipped') {
             if (level > 1) {
                 tr.className = '';
             }
