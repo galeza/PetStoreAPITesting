@@ -7,42 +7,39 @@ Created on Sep 10, 2018
 from behave import given, when, then, step
 from common.config.request_config_manager import RequestConfigManager
 from hamcrest import assert_that, equal_to, contains_string
+from common.config.request_constants import RequestConstants
 
 pet_details = {}
+row = 'pet_property'
+value = 'value'
 
 
 # specific id
 @step(u'"{http_request_type}" api pet request endpoint is set as "{endpoint}"')
 def step_impl(context, http_request_type, endpoint):
     context.requestConfigManager = RequestConfigManager()
-    if 'GET' == http_request_type:
+    if (RequestConstants.JSON_GET == http_request_type) or (RequestConstants.JSON_DELETE == http_request_type):
         context.requestConfigManager.set_endpoint(endpoint + "/" + str(context.pet.get_pet_id()))
-    elif 'GET FINDBYSTATUS' == http_request_type:
-        context.requestConfigManager.set_endpoint(endpoint + "?status=" )
-    elif 'POST' == http_request_type:
+    elif RequestConstants.JSON_FINDBYSTATUS == http_request_type:
+        context.requestConfigManager.set_endpoint(endpoint + RequestConstants.JSON_REQUEST_STATUS)
+    elif (RequestConstants.JSON_POST == http_request_type) or (RequestConstants.JSON_PUT == http_request_type):
         context.requestConfigManager.set_endpoint(endpoint)
-    elif 'POST UPLOADIMAGE' == http_request_type:
-        context.requestConfigManager.set_endpoint(endpoint+ "/" + str(context.pet.get_pet_id()) + "/" + "uploadImage")
-    elif 'PUT' == http_request_type:
-        context.requestConfigManager.set_endpoint(endpoint)
-    elif 'DELETE' == http_request_type:
-        context.requestConfigManager.set_endpoint(endpoint + "/" + str(context.pet.get_pet_id()))       
-        
-    print(str(context.pet.get_pet_id))
+    elif RequestConstants.JSON_UPLOAD == http_request_type:
+        context.requestConfigManager.set_endpoint(endpoint+ "/" + str(context.pet.get_pet_id()) + "/" + RequestConstants.JSON_UPLOAD_IMAGE)
 
 
 @when(u'Pet details are set as "{pet_property}" and "{value}"') 
 def step_impl(context, pet_property, value):
-    photoUrls = []
+    photourls = []
     for row in context.table:
-        if(row['pet_property']) == "photoUrls":
+        if(row['pet_property']) == RequestConstants.JSON_PHOTOURLS:
             
-            photoUrls.append(row['value'])
+            photourls.append(row['value'])
             
         else:
             pet_details[row['pet_property']] = row['value']
-    if photoUrls.__len__() > 0:
-        pet_details["photoUrls"] = photoUrls  
+    if photourls.__len__() > 0:
+        pet_details[RequestConstants.JSON_PHOTOURLS] = photourls  
     context.pet.set_pet_details(pet_details)
 
                 
@@ -66,26 +63,24 @@ def step_impl(context, photo):
 @then(u'Response BODY contains newly added pet details')
 def step_impl(context):
     added_pet_json = context.requestConfigManager.get_response_full_json()
-    assert_that(added_pet_json['status'], equal_to(context.pet.get_pet_status()))
-    assert_that(added_pet_json['name'], equal_to(context.pet.get_pet_name()))
-    assert_that(added_pet_json['id'], equal_to(context.pet.get_pet_id()))
-    assert_that(added_pet_json['photoUrls'], equal_to(context.pet.get_pet_photoUrls()))
+    assert_that(added_pet_json[RequestConstants.JSON_STATUS], equal_to(context.pet.get_pet_status()))
+    assert_that(added_pet_json[RequestConstants.JSON_NAME], equal_to(context.pet.get_pet_name()))
+    assert_that(added_pet_json[RequestConstants.JSON_ID], equal_to(context.pet.get_pet_id()))
+    assert_that(added_pet_json[RequestConstants.JSON_PHOTOURLS], equal_to(context.pet.get_pet_photourls()))
 
 @then(u'Response BODY pet status is equal to pet status')
 def step_impl(context):
     added_pet_json = context.requestConfigManager.get_response_full_json()
-    assert_that(added_pet_json[0]['status'], equal_to(context.pet.get_pet_status()))
+    assert_that(added_pet_json[0][RequestConstants.JSON_STATUS], equal_to(context.pet.get_pet_status()))
     
     
-@when(u'Pet details are specified as "{pet_name}" and "{photoUrl}" and "{status}"')
-def step_impl(context, pet_name, photoUrl, status):
-    print("1 " + context.pet.get_pet_name())
+@when(u'Pet details are specified as "{pet_name}" and "{photourl}" and "{status}"')
+def step_impl(context, pet_name, photourl, status):
     context.pet.set_pet_name(pet_name)
-    print("2 " + context.pet.get_pet_name())
     context.pet.set_pet_status(status)
-    photoUrls = []
-    photoUrls.append(photoUrl)
-    context.pet.set_pet_photoUrls(photoUrls)
+    photourls = []
+    photourls.append(photourl)
+    context.pet.set_pet_photourls(photourls)
 
 @when(u'Pet details are specified as "{pet_name}" and "{status}"')
 def step_impl(context, pet_name, status):
@@ -96,5 +91,5 @@ def step_impl(context, pet_name, status):
 @step(u'Response BODY contains uploaded file name')
 def step_impl(context):
     added_pet_json = context.requestConfigManager.get_response_full_json()
-    assert_that(added_pet_json['message'], contains_string(context.pet.get_pet_photo()))
+    assert_that(added_pet_json[RequestConstants.JSON_MESSAGE], contains_string(context.pet.get_pet_photo()))
       

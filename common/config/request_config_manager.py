@@ -5,6 +5,7 @@ Created on Sep 14, 2018
 '''
 import requests
 import logging
+from common.config.request_constants import RequestConstants
 
 class Singleton(object):
     _instances = {}
@@ -23,8 +24,6 @@ class RequestConfigManager(object):
     http_request_body = {}
     http_request_url_query_param = {}
     multipart_data ={}
-#     logger = logging.getLogger(__name__)
-    
     
 
     def __init__(self):
@@ -34,28 +33,28 @@ class RequestConfigManager(object):
         self.configure_logger()
     
     def set_basic_url(self, basic_url):
-        self.basic_config['basic_url'] = basic_url
+        self.basic_config[RequestConstants.JSON_URL] = basic_url
     
     def get_basic_url(self):
-        return self.basic_config['basic_url']   
+        return self.basic_config[RequestConstants.JSON_URL]   
     
     def set_http_content_type(self, header_content_type):
-        self.http_request_header['Content-Type'] = header_content_type
+        self.http_request_header[RequestConstants.JSON_CONTENT_TYPE] = header_content_type
     
     def get_http_content_type(self):
-        return self.http_request_header['Content-Type']      
+        return self.http_request_header[RequestConstants.JSON_CONTENT_TYPE]      
     
     def set_http_accept_type(self, header_accept_type):
-        self.http_request_header['accept'] = header_accept_type
+        self.http_request_header[RequestConstants.JSON_ACCEPT] = header_accept_type
     
     def get_http_accept_type(self):
-        return self.http_request_header['accept']   
+        return self.http_request_header[RequestConstants.JSON_ACCEPT]   
     
     def set_endpoint(self, api_endpoint):
-        self.basic_config['api_endpoint'] = api_endpoint
+        self.basic_config[RequestConstants.JSON_ENDPOINT] = api_endpoint
     
     def get_endpoint(self):
-        return self.basic_config['api_endpoint']       
+        return self.basic_config[RequestConstants.JSON_ENDPOINT]       
        
     def get_http_request_body(self):
         return self.http_request_body
@@ -67,98 +66,72 @@ class RequestConfigManager(object):
         self.http_request_header.clear()
                
     def set_get_response_full(self, url_temp):
-        self.basic_config['response_full'] = requests.get(url_temp,
+        self.basic_config[RequestConstants.JSON_RESPONSE] = requests.get(url_temp,
                                                                                          headers=self.http_request_header,
                                                                                          params=self.http_request_url_query_param,
                                                                                          data=self.http_request_body) 
 
-#         print("GET url is " + str(url_temp))
-#         print("body : ")
-#         print(self.http_request_body)
-#         print("header is " + str(self.http_request_header))
-#         print("query param is " + str(self.http_request_url_query_param))
             
     def set_post_response_full(self, url_temp):
         self.http_request_url_query_param.clear()
-        self.basic_config['response_full'] = requests.post(url_temp,
+        self.basic_config[RequestConstants.JSON_RESPONSE] = requests.post(url_temp,
                                                                                          headers=self.http_request_header,
                                                                                          params=self.http_request_url_query_param,
                                                                                          json=self.http_request_body) 
-#         print("post url is " + str(url_temp))
-#         print("body : ")
-#         print(self.http_request_body)
-#         print("header is " + str(self.http_request_header))
-#         print("query param is " + str(self.http_request_url_query_param))
+
 
     def set_post_uploadimage_response_full(self, url_temp):
         self.http_request_url_query_param.clear()
-#         self.clear_http_request_header()
-        self.basic_config['response_full'] = requests.post(url_temp,files=self.multipart_data) 
-#         print("TEXT: " + self.basic_config['response_full'].text)
-#         print("post upload image is is " + str(url_temp))
-#         print("files : ")
-#         print(self.http_request_body)
-#         print("multipart : ")
-#         print(self.multipart_data)
-#         print("header is " + str(self.http_request_header))
-#         print("query param is " + str(self.http_request_url_query_param))
-#          
+        self.basic_config[RequestConstants.JSON_RESPONSE] = requests.post(url_temp,files=self.multipart_data) 
+
+          
     def set_delete_response_full(self, url_temp):
         self.http_request_url_query_param.clear()
-        self.basic_config['response_full'] = requests.delete(url_temp,
+        self.basic_config[RequestConstants.JSON_RESPONSE] = requests.delete(url_temp,
                                                                                          headers=self.http_request_header,
                                                                                          params=self.http_request_url_query_param,
                                                                                          json=self.http_request_body) 
-#         print("url is " + str(url_temp))
-#         print("body : ")
-#         print(self.http_request_body)
-#         print("header is " + str(self.http_request_header))
-#         print("query param is " + str(self.http_request_url_query_param))
+
 
     def set_put_response_full(self, url_temp):
         self.http_request_url_query_param.clear()
-        self.basic_config['response_full'] = requests.put(url_temp,
+        self.basic_config[RequestConstants.JSON_RESPONSE] = requests.put(url_temp,
                                                                                          headers=self.http_request_header,
                                                                                          params=self.http_request_url_query_param,
                                                                                          json=self.http_request_body) 
-#         print("put url is " + str(url_temp))
-#         print("body : ")
-#         print(self.http_request_body)
-#         print("header is " + str(self.http_request_header))
-#         print("query param is " + str(self.http_request_url_query_param))
+
                         
     def get_response_full(self):
-        return self.basic_config['response_full']  
+        return self.basic_config[RequestConstants.JSON_RESPONSE]  
 
     def get_response_full_json(self):
-        return self.basic_config['response_full'].json()     
+        return self.basic_config[RequestConstants.JSON_RESPONSE].json()     
     
     def set_expected_response_code(self, expected_response_code):
-        self.basic_config['expected_response_code'] = expected_response_code
+        self.basic_config[RequestConstants.JSON_RESPONSE_CODE] = expected_response_code
     
     def get_expected_response_code(self):
-        return self.basic_config['expected_response_code']  
+        return self.basic_config[RequestConstants.JSON_RESPONSE_CODE]  
     
     def set_expected_response_content_type(self, expected_response_content_type):
-        self.basic_config['expected_response_content_type'] = expected_response_content_type
+        self.basic_config[RequestConstants.JSON_RESPONSE_CONTENT_TYPE] = expected_response_content_type
     
     def get_expected_response_content_type(self):
-        return self.basic_config['expected_response_content_type']  
+        return self.basic_config[RequestConstants.JSON_RESPONSE_CONTENT_TYPE]  
     
     def get_response_full_status_code(self):
-        return self.basic_config['response_full'].status_code   
+        return self.basic_config[RequestConstants.JSON_RESPONSE].status_code   
     
     def get_response_full_content_type(self):
-        print (self.basic_config['response_full'].headers['Content-Type'])
+        print (self.basic_config[RequestConstants.JSON_RESPONSE].headers[RequestConstants.JSON_CONTENT_TYPE])
         
-        return self.basic_config['response_full'].headers['Content-Type']
+        return self.basic_config[RequestConstants.JSON_RESPONSE].headers[RequestConstants.JSON_CONTENT_TYPE]
     
     def set_http_request_body_with_pet_details(self, pet):
-        self.http_request_body['id'] = pet.get_pet_id()
-#         print(pet.get_pet_id())
-        self.http_request_body['name'] = pet.get_pet_name()
-        self.http_request_body['photoUrls'] = pet.get_pet_photoUrls()
-        self.http_request_body['status'] = pet.get_pet_status()
+        self.http_request_body[RequestConstants.JSON_ID] = pet.get_pet_id()
+        self.http_request_body[RequestConstants.JSON_NAME] = pet.get_pet_name()
+        self.http_request_body[RequestConstants.JSON_PHOTOURLS] = pet.get_pet_photourls()
+        self.http_request_body[RequestConstants.JSON_STATUS] = pet.get_pet_status()
 
     def set_http_request_body_with_pet_photo(self, pet):
         self.clear_http_request_body()

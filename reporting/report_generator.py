@@ -5,9 +5,9 @@ Created on Oct 16, 2018
 '''
 from datetime import datetime
 from xml.sax import saxutils
-from reporting.report_constants import ReportConstants
+from reporting.html_report_constants import HtmlReportConstants
 import logging
-from common.config.constant import Constant
+from reporting.report_constants import ReportConstants
 
 class ReportGenerator(object):
     __version__ = "0.1"
@@ -19,27 +19,27 @@ class ReportGenerator(object):
 
 
     def __init__(self,stream):
-        self.title = ReportConstants.DEFAULT_TITLE
-        self.description = ReportConstants.DEFAULT_DESCRIPTION
+        self.title = HtmlReportConstants.DEFAULT_TITLE
+        self.description = HtmlReportConstants.DEFAULT_DESCRIPTION
         self.stream = stream
 
     def get_attributes(self, json_data):
         start_time = datetime.utcnow()
         duration = 0
         try:
-            start_time = json_data[0][Constant.SCENARIO + '0'][Constant.START]
+            start_time = json_data[0][ReportConstants.SCENARIO + '0'][ReportConstants.START]
             self.logger.info(self.format_unix_timestamp(start_time / 1000, '%Y-%m-%d %H:%M:%S'))
-            end_time = int(json_data[-1][Constant.SCENARIO+ str(len(json_data) - 1)][Constant.STOP])
+            end_time = int(json_data[-1][ReportConstants.SCENARIO+ str(len(json_data) - 1)][ReportConstants.STOP])
             self.logger.info(self.format_unix_timestamp(end_time / 1000, '%Y-%m-%d %H:%M:%S'))
             duration = end_time - start_time
             self.logger.info(duration)
-            counters = {Constant.PASSED:0, Constant.FAILED:0, Constant.SKIPPED:0, Constant.ERROR:0}
+            counters = {ReportConstants.PASSED:0, ReportConstants.FAILED:0, ReportConstants.SKIPPED:0, ReportConstants.ERROR:0}
             
             status = []
 
             for x in json_data:
                 for scenario in x:
-                    result = ReportConstants.STATUS[x[scenario][Constant.STATUS]]
+                    result = HtmlReportConstants.STATUS[x[scenario][ReportConstants.STATUS]]
                     counters[result] +=1
 
             for cnt in counters:
@@ -61,14 +61,14 @@ class ReportGenerator(object):
             ('Status', status),
         ]
 
-    def generateReport(self, result):
+    def generate_report(self, result):
         report_attrs = self.get_attributes(result)
         generator = 'ReportGenerator %s' % ReportGenerator.__version__
         stylesheet = self._generate_stylesheet()
         heading = self._generate_heading(report_attrs)
         report = self._generate_report(result)
         ending = self._generate_ending()
-        output = ReportConstants.HTML_TMPL % dict(
+        output = HtmlReportConstants.HTML_TMPL % dict(
             title=saxutils.escape(self.title),
             generator = generator,
             stylesheet=stylesheet,
@@ -79,19 +79,19 @@ class ReportGenerator(object):
         self.stream.write(output.encode('utf8'))
         
     def _generate_stylesheet(self):
-        return ReportConstants.STYLESHEET_TMPL
+        return HtmlReportConstants.STYLESHEET_TMPL
     
     def _generate_heading(self, report_attrs):
         a_lines = []
         for name, value in report_attrs:
             self.logger.info('name ' + str(name))
             self.logger.info('value' + str(value))
-            line = ReportConstants.HEADING_ATTRIBUTE_TMPL % dict(
+            line = HtmlReportConstants.HEADING_ATTRIBUTE_TMPL % dict(
                     name=saxutils.escape(name),
                     value=saxutils.escape(value),
                 )
             a_lines.append(line)
-        heading = ReportConstants.HEADING_TMPL % dict(
+        heading = HtmlReportConstants.HEADING_TMPL % dict(
             title=saxutils.escape(self.title),
             parameters=''.join(a_lines),
             description=saxutils.escape(self.description),
@@ -107,37 +107,31 @@ class ReportGenerator(object):
         total_error = 0
         total_skipped = 0
         for scenario in json_data:
-            counters = {Constant.PASSED:0, Constant.FAILED:0, Constant.SKIPPED:0, Constant.ERROR:0}
-#             np = nf = ne =ns= 0
-            for step in scenario[Constant.SCENARIO + str(scenario_id)][Constant.STEPS]:
-                counters[step[Constant.STATUS]] +=1
-#                 if step[Constant.STATUS] == Constant.PASSED: np += 1
-#                 elif step[Constant.STATUS] == Constant.FAILED: nf += 1
-#                 elif 
-#                 else: ne += 1
-        
+            counters = {ReportConstants.PASSED:0, ReportConstants.FAILED:0, ReportConstants.SKIPPED:0, ReportConstants.ERROR:0}
+            for step in scenario[ReportConstants.SCENARIO + str(scenario_id)][ReportConstants.STEPS]:
+                counters[step[ReportConstants.STATUS]] +=1
 
-            row = ReportConstants.REPORT_CLASS_TMPL % dict(
-                style=counters[Constant.ERROR] > 0 and 'errorClass' or counters[Constant.SKIPPED] > 0 and 'skippedClass'or counters[Constant.FAILED] > 0 and 'failClass' or 'passClass',
-                desc=scenario[Constant.SCENARIO + str(scenario_id)][Constant.NAME],
+            row = HtmlReportConstants.REPORT_CLASS_TMPL % dict(
+                style=counters[ReportConstants.ERROR] > 0 and 'errorClass' or counters[ReportConstants.SKIPPED] > 0 and 'skippedClass'or counters[ReportConstants.FAILED] > 0 and 'failClass' or 'passClass',
+                desc=scenario[ReportConstants.SCENARIO + str(scenario_id)][ReportConstants.NAME],
                 count=sum(counters.values()),
-                Pass=counters[Constant.PASSED],
-                fail=counters[Constant.FAILED],
-                error=counters[Constant.ERROR],
-                skipped = counters[Constant.SKIPPED],
+                Pass=counters[ReportConstants.PASSED],
+                fail=counters[ReportConstants.FAILED],
+                error=counters[ReportConstants.ERROR],
+                skipped = counters[ReportConstants.SKIPPED],
                 cid='c%s' % (scenario_id + 1),
             )
             rows.append(row)
             step_id = 1
-            for step in scenario[Constant.SCENARIO + str(scenario_id)][Constant.STEPS]:
+            for step in scenario[ReportConstants.SCENARIO + str(scenario_id)][ReportConstants.STEPS]:
                 self._generate_report_test(rows, scenario_id,step, step_id, step_id)
                 step_id +=1
             scenario_id +=  1
-            total_passed +=counters[Constant.PASSED]
-            total_failed += counters[Constant.FAILED]
-            total_error += counters[Constant.ERROR]
-            total_skipped +=counters[Constant.SKIPPED]
-        report = ReportConstants.REPORT_TMPL % dict(
+            total_passed +=counters[ReportConstants.PASSED]
+            total_failed += counters[ReportConstants.FAILED]
+            total_error += counters[ReportConstants.ERROR]
+            total_skipped +=counters[ReportConstants.SKIPPED]
+        report = HtmlReportConstants.REPORT_TMPL % dict(
             test_list=''.join(rows),
             count=str(total_passed + total_failed + total_error),
             Pass=str(total_passed),
@@ -149,21 +143,21 @@ class ReportGenerator(object):
         return report
 
     def _generate_report_test(self, rows, cid,step, tid, name):
-        status = ReportConstants.STATUS[step[Constant.STATUS]]
-        has_output = bool(status != Constant.PASSED and status != Constant.SKIPPED)
+        status = HtmlReportConstants.STATUS[step[ReportConstants.STATUS]]
+        has_output = bool(status != ReportConstants.PASSED and status != ReportConstants.SKIPPED)
         tid = status + ' t%s.%s' % (cid+1,tid)
-        doc = step[Constant.NAME]
+        doc = step[ReportConstants.NAME]
         desc = doc and ('%s: %s' % (name, doc)) or name
-        tmpl = has_output and ReportConstants.REPORT_TEST_WITH_OUTPUT_TMPL or ReportConstants.REPORT_TEST_NO_OUTPUT_TMPL
+        tmpl = has_output and HtmlReportConstants.REPORT_TEST_WITH_OUTPUT_TMPL or HtmlReportConstants.REPORT_TEST_NO_OUTPUT_TMPL
         uo = ''
         ue = ''
         try:
-            uo = step[Constant.STATUS_DETAILS][Constant.MESSAGE]
-            ue = step[Constant.STATUS_DETAILS][Constant.TRACE]
+            uo = step[ReportConstants.STATUS_DETAILS][ReportConstants.MESSAGE]
+            ue = step[ReportConstants.STATUS_DETAILS][ReportConstants.TRACE]
         except KeyError:
             pass
 
-        script = ReportConstants.REPORT_TEST_OUTPUT_TMPL % dict(
+        script = HtmlReportConstants.REPORT_TEST_OUTPUT_TMPL % dict(
             id = tid,
             output = saxutils.escape(uo+ue),
         )
@@ -194,7 +188,7 @@ class ReportGenerator(object):
             return
         
     def _generate_ending(self):
-        return ReportConstants.ENDING_TMPL
+        return HtmlReportConstants.ENDING_TMPL
 
     def format_unix_timestamp(self, unixtime, formatstr):
         return str(datetime.utcfromtimestamp(unixtime).strftime(formatstr))   
