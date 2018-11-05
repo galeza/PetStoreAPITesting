@@ -8,6 +8,7 @@ from common.config.request_config_manager import RequestConfigManager
 from behave import given, when, then, step
 from features.domain_models.pet import Pet
 from hamcrest import assert_that, equal_to
+from common.config.request_constants import RequestConstants
 
 
 @given(u'Swagger PetStore web application url is set as "{basic_url}"')
@@ -32,28 +33,28 @@ def step_impl(context, header_accept_type):
 @when(u'"{http_request_type}" HTTP request is raised')
 def step_impl(context, http_request_type):
     url_temp = context.requestConfigManager.get_basic_url() 
-    if 'GET' == http_request_type:
+    if RequestConstants.JSON_GET == http_request_type:
         url_temp += context.requestConfigManager.get_endpoint()
         context.requestConfigManager.clear_http_request_body()
         context.requestConfigManager.set_get_response_full(url_temp)
-    elif 'GET FINDBYSTATUS' == http_request_type:
+    elif RequestConstants.JSON_FINDBYSTATUS == http_request_type:
         url_temp += context.requestConfigManager.get_endpoint() + context.pet.get_pet_status()
         print(url_temp)
         context.requestConfigManager.clear_http_request_body()
         context.requestConfigManager.set_get_response_full(url_temp)
-    elif 'POST' == http_request_type:
+    elif RequestConstants.JSON_POST == http_request_type:
         url_temp += context.requestConfigManager.get_endpoint()
 #         context.requestConfigManager.clear_http_request_body()
         context.requestConfigManager.set_post_response_full(url_temp)
-    elif 'POST UPLOADIMAGE' == http_request_type:
+    elif RequestConstants.JSON_UPLOAD == http_request_type:
         url_temp += context.requestConfigManager.get_endpoint()
 #         context.requestConfigManager.clear_http_request_body()
         context.requestConfigManager.set_post_uploadimage_response_full(url_temp)        
-    elif 'PUT' == http_request_type:
+    elif RequestConstants.JSON_PUT == http_request_type:
         url_temp += context.requestConfigManager.get_endpoint()
         context.requestConfigManager.set_put_response_full(url_temp)
         
-    elif 'DELETE' == http_request_type:
+    elif RequestConstants.JSON_DELETE == http_request_type:
         url_temp += context.requestConfigManager.get_endpoint()
         context.requestConfigManager.set_delete_response_full(url_temp)
 
