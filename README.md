@@ -22,21 +22,12 @@ behave features/feature_pet/Pet_Store_API_Testing.feature -n 'GET pet request us
 Test cases are designed using behave python module. They have given-when-then structure.
 
 1. Structure
-PetStoreAPITesting/
-├── common/
-│   ├── config/
-│       └── config_files.py
-├── features/
-|   |--domain_models/
-|   |--feature_pet/
-│   |   |--Pet_Store_API_Testing.feature
-│   └── steps/
-│       └── test_steps.py
-├── reporting/
-|	|--results/
-|	|--reporting_files.py
 
-2. Test case example
+![Alt text](./project_structure.png?raw=true "Project Structure")
+
+
+2. Test case example with given-when-then structure:
+
 Scenario: GET pet request using pet ID
 
   Given "POST" api pet request endpoint is set as "pet"
