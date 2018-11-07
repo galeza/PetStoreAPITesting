@@ -1,6 +1,17 @@
 '''
 Created on Sep 15, 2018
 
+# -----------------------------------------------------------------------------
+# PET DOMAIN-MODEL:
+# -----------------------------------------------------------------------------
+
+Pet contains: 
+id - int , 
+name - String
+photourls = list
+status 
+photo String
+
 @author: agagaleza
 '''
 
@@ -8,9 +19,7 @@ from common.util.random_string_generator import RandomStringGenerator
 import logging
 from common.config.request_constants import RequestConstants
 
-# -----------------------------------------------------------------------------
-# DOMAIN-MODEL:
-# -----------------------------------------------------------------------------
+
 
 class Pet(object):
     '''

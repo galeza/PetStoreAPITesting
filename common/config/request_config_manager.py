@@ -1,6 +1,12 @@
 '''
 Created on Sep 14, 2018
 
+RequestConfigManager is a singleton class that manages HTTP requests - 
+contains methods that set endpoint URL, content type, accept typ and get response
+from Swagger PetStore server. 
+
+
+
 @author: agagaleza
 '''
 import requests

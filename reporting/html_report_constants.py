@@ -1,7 +1,10 @@
 '''
 Created on Oct 17, 2018
 
-@author: agagaleza
+Html templated for report generator.
+New status was added - test can be skipped.
+
+@author: "Wai Yip Tung"
 '''
 
 
