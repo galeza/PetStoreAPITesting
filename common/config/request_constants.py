@@ -1,6 +1,8 @@
 '''
 Created on Nov 4, 2018
 
+JSON constants that are used in requests.
+
 @author: agagaleza
 '''
 class RequestConstants(object):

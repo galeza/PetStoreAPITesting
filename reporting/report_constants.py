@@ -1,6 +1,8 @@
 '''
 Created on 14 september 2018
 
+Constants that are used in report generation.
+
 @author: Agnieszka Galeza
 '''
 

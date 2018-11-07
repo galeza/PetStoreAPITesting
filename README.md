@@ -1,8 +1,9 @@
-#PetStoreAPITesting
-This is Python API project for Swagger Petstore: http://petstore.swagger.io/
+# PetStoreAPITesting
+
+This is REST API Python and Behave testing framework for Swagger Petstore: http://petstore.swagger.io/
 
 
-#Getting Started
+# Getting Started
 Download project from github. Project can be run in eclipse or in console using following commands: 
 
 1. run a runner file:
@@ -11,87 +12,98 @@ python Pet_Store_API_Testing_Runner.py
 python Pet_Store_API_Testing_Runner.py ./features/feature_pet/
 3. run tests with specific tags:
 python Pet_Store_API_Testing_Runner.py ./features/feature_pet/  --tags=@smoke
-4. run without runner:
+4. run without runner (In this case report is not generated):
 behave features/feature_pet/Pet_Store_API_Testing.feature
-5. run specific scenario:
+5. run specific scenario (In this case report is not generated):
 behave features/feature_pet/Pet_Store_API_Testing.feature -n 'GET pet request using pet ID' 
 
-#Prerequisites
-##Software used:
+
+# Project structure
+Test cases are designed using behave python module. They have given-when-then structure.
+
+1. Structure
+
+![Alt text](./project_structure.png?raw=true "Project Structure")
+
+
+2. Test case example with given-when-then structure:
+
+Scenario: GET pet request using pet ID
+
+  Given "POST" api pet request endpoint is set as "pet"
+  When HEADER params for request and response are specified
+	And Pet details are specified as "Rex" and "/workspace/PetStoreAPITesting1 " and "pending"
+	And Request BODY form parameters are set using pet details  
+	And "POST" HTTP request is raised
+    And Valid HTTP response is received 
+	And Response http code is 200 
+    And "GET" api pet request endpoint is set as "pet"
+    And HEADER params for request and response are specified
+	And "GET" HTTP request is raised
+  Then Valid HTTP response is received
+	And Response http code is 200 
+
+
+# Prerequisites
+
+## Built With:
 Python 3.6
 Module requests version 2.19
 Module behave version 1.2.6
 Module hamcrest version 1.9
-Eclipse + SonarLint
+Eclipse + SonarLint + Pydev
 
-###install also allure_behave using command:
+### install also allure_behave using command:
 -sudo pip install allure_behave
 
-###install Pyhamcrest using commands:
+### install Pyhamcrest using commands:
 -sudo pip install PyHamcrest -> python2
 which pip3 python3
 -sudo pip3 install PyHamcrest -> python3
 
-#How to use eclipse with Python behave
+# How to use eclipse with Python behave
 
 
-##unsused import from behave in steps.py
+## unsused import from behave in steps.py
 -behave should be added to the 'Forced Builtin'
 Window>Preferences>PyDev>Interperters>Python Interperter>Forced Builtins>New
 
-##duplicated signature: step_impl error
+## duplicated signature: step_impl error
 -to turn it off, Window>Preferences>PyDev>Editor>Code Analysis>Others>Duplicated Signature>Ignore
 
-##run from eclipse
+## run from eclipse
 -setup the built in run. 
 Run>Run Configurations>Python Run
 Create a new run. In Main>Project set project. For the Main Module choose version of "/home/xx/bin/behave" Inside the Arguments tab set the Working Directory where .feature file exists. 
 
+# Tags
 
-Give examples
-Installing
-A step by step series of examples that tell you how to get a development env running
+You can enable/skip tests using tags:
 
-Say what the step will be
+select/enable	  | --tags=@smoke	        |Only items with this tag.
+not (tilde/minus) |	--tags=~@smoke	        |Only items without this tag.
+logical-or	      | --tags=@one,@two	    |If @one or @two is present.
+logical-and	      | --tags=@one --tags=@two	|If both @one and @two are present.
 
-Give the example
-And repeat
+example run only smoke test cases:
+python Pet_Store_API_Testing_Runner.py ./features/feature_pet/  --tags=@smoke
 
-until finished
-End with an example of getting some data out of the system or using it for a little demo
+# Reports
 
-Running the tests
-Explain how to run the automated tests for this system
+Test reports are generated in the reporting/results directory.
+Each test case can have a following status: passed, failed, skipped.
 
-Break down into end to end tests
-Explain what these tests test and why
+Report example:
+![Alt text](./report_example.png?raw=true "Report Example")
 
-Give an example
-And coding style tests
-Explain what these tests test and why
+# Versioning
+Version 1.0
 
-Give an example
-Deployment
-Add additional notes about how to deploy this on a live system
+# Author
+Agnieszka Galeza
 
-Built With
-Dropwizard - The web framework used
-Maven - Dependency Management
-ROME - Used to generate RSS Feeds
-Contributing
-Please read CONTRIBUTING.md for details on our code of conduct, and the process for submitting pull requests to us.
+# License
 
-Versioning
-We use SemVer for versioning. For the versions available, see the tags on this repository.
 
-Authors
-Billie Thompson - Initial work - PurpleBooth
-See also the list of contributors who participated in this project.
+# Acknowledgments
 
-License
-This project is licensed under the MIT License - see the LICENSE.md file for details
-
-Acknowledgments
-Hat tip to anyone whose code was used
-Inspiration
-etc

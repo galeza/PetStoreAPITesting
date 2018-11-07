@@ -1,6 +1,7 @@
 '''
 Created on Sep 15, 2018
 
+RandomStringGenerator generates random strings like pet name, random numbers.
 @author: agagaleza
 '''
 
