@@ -4,29 +4,33 @@ Created on Nov 8, 2018
 # CATEGORY DOMAIN-MODEL:
 # -----------------------------------------------------------------------------
 
-Category of the pet like: domesticated, protection, or entertainment 
+Category of the pet like: domesticated, protection, or entertainment, for kids
 @author: agagaleza
 '''
 from common.util.random_string_generator import RandomStringGenerator
+from features.domain_models.base import Base
 
-class Category(object):
+class Category(Base):
     '''
     classdocs
     '''
-    category_id = 0
-    category_name = ""
+    id = 0
+    name = ""
 
     def get_category_id(self):
-        return  self.category_id
+        return  self.id
 
     def get_category_name(self):
-        return self.category_name
+        return self.name
 
     def set_category_name(self, category_name):
-        self.category_name = category_name
-        
+        self.name = category_name
+ 
+
+               
     def __init__(self):
         '''
         Constructor
         '''
-        self.category_id = RandomStringGenerator.generate_random_number_with_n_digits(6)
+        self.id = RandomStringGenerator.generate_random_number_with_n_digits(6)
+        self.name = 'category'

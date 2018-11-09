@@ -12,6 +12,8 @@ from Swagger PetStore server.
 import requests
 import logging
 from common.config.request_constants import RequestConstants
+import logging
+
 
 class Singleton(object):
     _instances = {}
@@ -30,7 +32,7 @@ class RequestConfigManager(object):
     http_request_body = {}
     http_request_url_query_param = {}
     multipart_data ={}
-    
+    logger = logging.getLogger(__name__)    
 
     def __init__(self):
         '''
@@ -85,7 +87,6 @@ class RequestConfigManager(object):
                                                                                          params=self.http_request_url_query_param,
                                                                                          json=self.http_request_body) 
 
-
     def set_post_uploadimage_response_full(self, url_temp):
         self.http_request_url_query_param.clear()
         self.basic_config[RequestConstants.JSON_RESPONSE] = requests.post(url_temp,files=self.multipart_data) 
@@ -138,6 +139,9 @@ class RequestConfigManager(object):
         self.http_request_body[RequestConstants.JSON_NAME] = pet.get_pet_name()
         self.http_request_body[RequestConstants.JSON_PHOTOURLS] = pet.get_pet_photourls()
         self.http_request_body[RequestConstants.JSON_STATUS] = pet.get_pet_status()
+        self.http_request_body[RequestConstants.JSON_CATEGORY] = pet.get_pet_category().to_dict()
+        self.http_request_body[RequestConstants.JSON_TAGS] = pet.get_pet_tag_list()
+        self.logger.info('http_request_body ' + str(self.http_request_body))
 
     def set_http_request_body_with_pet_photo(self, pet):
         self.clear_http_request_body()

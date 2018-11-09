@@ -12,6 +12,11 @@ tagOptions = ' --tags=@smoke '
 
 python Pet_Store_API_Testing_Runner.py ./features/feature_pet/  --tags=@smoke
 
+Traceback (most recent call last):
+  File "Pet_Store_API_Testing_Runner.py", line 56, in <module>
+    fullRunnerOptions = tagOptions + featureFilePath + reportingRelated + commonRunnerOptions
+NameError: name 'featureFilePath' is not defined
+
 '''
 
 import glob
