@@ -11,8 +11,6 @@ from common.config.request_constants import RequestConstants
 import logging
 
 pet_details = {}
-row = 'pet_property'
-value = 'value'
 logger = logging.getLogger(__name__)
 
 # specific id

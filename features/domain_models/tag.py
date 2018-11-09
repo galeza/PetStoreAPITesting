@@ -3,8 +3,7 @@ Created on Nov 8, 2018
 # -----------------------------------------------------------------------------
 # TAG DOMAIN-MODEL:
 # -----------------------------------------------------------------------------
-
-from features.domain_models.base import Base
+Tag of the pet like: domesticated, protection, or entertainment, for kids
 
 @author: agagaleza
 '''
@@ -33,4 +32,3 @@ class Tag(Base):
         Constructor
         '''
         self.id = RandomStringGenerator.generate_random_number_with_n_digits(6)
-        self.name ='tag'

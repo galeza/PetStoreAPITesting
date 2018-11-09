@@ -72,9 +72,9 @@ class Pet(object):
 
     def get_pet_tag(self):
         return self.tag
-# TODO remove this code
+
     def set_pet_tag(self, tag_name):
-        self.category.set_tag_name(tag_name)
+        self.tag.set_tag_name(tag_name)
         
     def get_pet_tag_list(self):
         return self.tag_list
@@ -87,15 +87,15 @@ class Pet(object):
 #         for pet_URLS
         self.set_pet_photourls(pet_details.get(RequestConstants.JSON_PHOTOURLS))
         self.set_pet_status(pet_details.get(RequestConstants.JSON_STATUS))
+        self.set_pet_tag(pet_details.get(RequestConstants.JSON_TAG))
+        self.tag_list.append(self.tag.to_dict())
+        self.set_pet_category(pet_details.get(RequestConstants.JSON_CATEGORY))
         
     def __init__(self):
         '''
         Constructor
         '''
         self.pet_id = RandomStringGenerator.generate_random_number_with_n_digits(6)
-        self.tag_list.append(self.tag.to_dict())
-        self.logger.info('PET constructor' + str(self.tag_list))
-        self.logger.info(str(self.pet_id))
 
         
         

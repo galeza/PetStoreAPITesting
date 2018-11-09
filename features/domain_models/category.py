@@ -4,7 +4,7 @@ Created on Nov 8, 2018
 # CATEGORY DOMAIN-MODEL:
 # -----------------------------------------------------------------------------
 
-Category of the pet like: domesticated, protection, or entertainment, for kids
+
 @author: agagaleza
 '''
 from common.util.random_string_generator import RandomStringGenerator
@@ -33,4 +33,3 @@ class Category(Base):
         Constructor
         '''
         self.id = RandomStringGenerator.generate_random_number_with_n_digits(6)
-        self.name = 'category'

@@ -15,6 +15,8 @@ Scenario Outline: Add new pet using POST request
 		| name                                           | Elwanek|
 		| photoUrls                                      | /Users/a/Documents/Sel/workspace/PetStoreAPITesting1 |
 		| photoUrls                                      | /Users/a/Documents/Sel/workspace/PetStoreAPITesting2 |
+		| category                                       | dog|
+		| tag                                            | for kids|
 
 	And Pet "<status>" is specified
 	And Request BODY form parameters are set using pet details  
