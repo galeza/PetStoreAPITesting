@@ -9,6 +9,7 @@ from common.config.request_config_manager import RequestConfigManager
 from hamcrest import assert_that, equal_to, contains_string
 from common.config.request_constants import RequestConstants
 import logging
+from features.domain_models.tag import Tag
 
 pet_details = {}
 logger = logging.getLogger(__name__)
@@ -30,15 +31,21 @@ def step_impl(context, http_request_type, endpoint):
 @when(u'Pet details are set as "{pet_property}" and "{value}"') 
 def step_impl(context, pet_property, value):
     photourls = []
+    tags = []
     for row in context.table:
         if(row['pet_property']) == RequestConstants.JSON_PHOTOURLS:
             
             photourls.append(row['value'])
-            
+        elif(row['pet_property']) == RequestConstants.JSON_TAG:
+            tag = Tag()
+            tag.set_tag_name(row['value'])
+            tags.append(tag.to_dict())  
         else:
             pet_details[row['pet_property']] = row['value']
     if photourls.__len__() > 0:
         pet_details[RequestConstants.JSON_PHOTOURLS] = photourls  
+    if tags.__len__() > 0:
+        pet_details[RequestConstants.JSON_TAGS] = tags  
     context.pet.set_pet_details(pet_details)
 
                 

@@ -10,7 +10,6 @@ from Swagger PetStore server.
 @author: agagaleza
 '''
 import requests
-import logging
 from common.config.request_constants import RequestConstants
 import logging
 
@@ -141,7 +140,7 @@ class RequestConfigManager(object):
         self.http_request_body[RequestConstants.JSON_STATUS] = pet.get_pet_status()
         self.http_request_body[RequestConstants.JSON_CATEGORY] = pet.get_pet_category().to_dict()
         self.http_request_body[RequestConstants.JSON_TAGS] = pet.get_pet_tag_list()
-        self.logger.info('http_request_body ' + str(self.http_request_body))
+#         self.logger.info('http_request_body ' + str(self.http_request_body))
 
     def set_http_request_body_with_pet_photo(self, pet):
         self.clear_http_request_body()
