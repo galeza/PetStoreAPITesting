@@ -38,6 +38,7 @@ Scenario: GET pet request using pet ID
 
   Given "POST" api pet request endpoint is set as "pet"
   When HEADER params for request and response are specified
+    And HEADER param api_key is set
 	And Pet details are specified as "Elwanek" and "/Users/a/Documents/Sel/workspace/PetStoreAPITesting1 " and "pending"
 	And Request BODY form parameters are set using pet details  
 	And "POST" HTTP request is raised

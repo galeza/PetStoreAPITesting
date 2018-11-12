@@ -36,4 +36,6 @@ class RequestConstants(object):
     JSON_RESPONSE = 'response_full'
     JSON_RESPONSE_CODE = 'expected_response_code'
     JSON_RESPONSE_CONTENT_TYPE =  'expected_response_content_type'
+    JSON_API_KEY =  'api_key'
+    API_KEY = 'galeza'
     

@@ -10,6 +10,7 @@ from hamcrest import assert_that, equal_to, contains_string
 from common.config.request_constants import RequestConstants
 import logging
 from features.domain_models.tag import Tag
+from hamcrest.library.collection.isdict_containingkey import has_key
 
 pet_details = {}
 logger = logging.getLogger(__name__)
@@ -69,10 +70,7 @@ def step_impl(context, photo):
 @then(u'Response BODY contains newly added pet details')
 def step_impl(context):
     added_pet_json = context.requestConfigManager.get_response_full_json()
-#     print('added_pet_json ' + str(added_pet_json))
-#     logger.info('added_pet_json ' + str(added_pet_json))
-#     print('added_pet_json[RequestConstants.JSON_STATUS] ' + added_pet_json[RequestConstants.JSON_STATUS])
-#     print('context.pet.get_pet_status() ' + context.pet.get_pet_status())
+    has_key(RequestConstants.JSON_STATUS)
     assert_that(added_pet_json[RequestConstants.JSON_STATUS], equal_to(context.pet.get_pet_status()))
     assert_that(added_pet_json[RequestConstants.JSON_NAME], equal_to(context.pet.get_pet_name()))
     assert_that(added_pet_json[RequestConstants.JSON_ID], equal_to(context.pet.get_pet_id()))

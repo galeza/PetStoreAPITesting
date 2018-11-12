@@ -30,6 +30,10 @@ def step_impl(context, header_content_type):
 def step_impl(context, header_accept_type):
     context.requestConfigManager.set_http_accept_type(header_accept_type)
 
+@step(u'HEADER param api_key is set')
+def step_impl(context):
+    context.requestConfigManager.set_api_key()
+    
 @when(u'"{http_request_type}" HTTP request is raised')
 def step_impl(context, http_request_type):
     url_temp = context.requestConfigManager.get_basic_url() 
@@ -87,6 +91,7 @@ def step_impl(context):
         
 @when(u'HEADER params for request and response are specified')
 def step_impl(context):
+    context.requestConfigManager.clear_http_request_header()
     context.execute_steps(u''' when HEADER param request content type is set as "application/json"
     and HEADER param response accept type is set as "application/json" ''')
         
