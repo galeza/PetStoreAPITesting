@@ -8,11 +8,12 @@ from behave import given, when, then, step
 from common.config.request_config_manager import RequestConfigManager
 from hamcrest import assert_that, equal_to, contains_string
 from common.config.request_constants import RequestConstants
+import logging
+from features.domain_models.tag import Tag
+from hamcrest.library.collection.isdict_containingkey import has_key
 
 pet_details = {}
-row = 'pet_property'
-value = 'value'
-
+logger = logging.getLogger(__name__)
 
 # specific id
 @step(u'"{http_request_type}" api pet request endpoint is set as "{endpoint}"')
@@ -31,15 +32,21 @@ def step_impl(context, http_request_type, endpoint):
 @when(u'Pet details are set as "{pet_property}" and "{value}"') 
 def step_impl(context, pet_property, value):
     photourls = []
+    tags = []
     for row in context.table:
         if(row['pet_property']) == RequestConstants.JSON_PHOTOURLS:
             
             photourls.append(row['value'])
-            
+        elif(row['pet_property']) == RequestConstants.JSON_TAG:
+            tag = Tag()
+            tag.set_tag_name(row['value'])
+            tags.append(tag.to_dict())  
         else:
             pet_details[row['pet_property']] = row['value']
     if photourls.__len__() > 0:
         pet_details[RequestConstants.JSON_PHOTOURLS] = photourls  
+    if tags.__len__() > 0:
+        pet_details[RequestConstants.JSON_TAGS] = tags  
     context.pet.set_pet_details(pet_details)
 
                 
@@ -63,6 +70,7 @@ def step_impl(context, photo):
 @then(u'Response BODY contains newly added pet details')
 def step_impl(context):
     added_pet_json = context.requestConfigManager.get_response_full_json()
+    has_key(RequestConstants.JSON_STATUS)
     assert_that(added_pet_json[RequestConstants.JSON_STATUS], equal_to(context.pet.get_pet_status()))
     assert_that(added_pet_json[RequestConstants.JSON_NAME], equal_to(context.pet.get_pet_name()))
     assert_that(added_pet_json[RequestConstants.JSON_ID], equal_to(context.pet.get_pet_id()))
