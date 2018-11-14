@@ -76,7 +76,6 @@ class RequestConfigManager(object):
         self.http_request_header.clear()
                
     def set_get_response_full(self, url_temp):
-        self.logger.info('http_request_header ' + str(self.http_request_header))
         self.basic_config[RequestConstants.JSON_RESPONSE] = requests.get(url_temp,
                                                                                          headers=self.http_request_header,
                                                                                          params=self.http_request_url_query_param,
@@ -84,7 +83,6 @@ class RequestConfigManager(object):
 
             
     def set_post_response_full(self, url_temp):
-        self.logger.info('http_request_header ' + str(self.http_request_header))
         self.http_request_url_query_param.clear()
         self.basic_config[RequestConstants.JSON_RESPONSE] = requests.post(url_temp,
                                                                                          headers=self.http_request_header,
@@ -92,14 +90,12 @@ class RequestConfigManager(object):
                                                                                          json=self.http_request_body) 
 
     def set_post_uploadimage_response_full(self, url_temp):
-        self.logger.info('http_request_header ' + str(self.http_request_header))
         self.http_request_url_query_param.clear()
         self.basic_config[RequestConstants.JSON_RESPONSE] = requests.post(url_temp,files=self.multipart_data) 
 
           
     def set_delete_response_full(self, url_temp):
         self.http_request_url_query_param.clear()
-        self.logger.info('http_request_header ' + str(self.http_request_header))
         self.basic_config[RequestConstants.JSON_RESPONSE] = requests.delete(url_temp,
                                                                                          headers=self.http_request_header,
                                                                                          params=self.http_request_url_query_param,
@@ -107,7 +103,6 @@ class RequestConfigManager(object):
 
 
     def set_put_response_full(self, url_temp):
-        self.logger.info('http_request_header ' + str(self.http_request_header))
         self.http_request_url_query_param.clear()
         self.basic_config[RequestConstants.JSON_RESPONSE] = requests.put(url_temp,
                                                                                          headers=self.http_request_header,

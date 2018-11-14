@@ -72,8 +72,11 @@ def step_impl(context):
     added_pet_json = context.requestConfigManager.get_response_full_json()
     has_key(RequestConstants.JSON_STATUS)
     assert_that(added_pet_json[RequestConstants.JSON_STATUS], equal_to(context.pet.get_pet_status()))
+    has_key(RequestConstants.JSON_NAME)
     assert_that(added_pet_json[RequestConstants.JSON_NAME], equal_to(context.pet.get_pet_name()))
+    has_key(RequestConstants.JSON_ID)
     assert_that(added_pet_json[RequestConstants.JSON_ID], equal_to(context.pet.get_pet_id()))
+    has_key(RequestConstants.JSON_PHOTOURLS)
     assert_that(added_pet_json[RequestConstants.JSON_PHOTOURLS], equal_to(context.pet.get_pet_photourls()))
 
 @then(u'Response BODY pet status is equal to pet status')
