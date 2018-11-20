@@ -132,8 +132,6 @@ class RequestConfigManager(object):
         return self.basic_config[RequestConstants.JSON_RESPONSE].status_code   
     
     def get_response_full_content_type(self):
-        print (self.basic_config[RequestConstants.JSON_RESPONSE].headers[RequestConstants.JSON_CONTENT_TYPE])
-        
         return self.basic_config[RequestConstants.JSON_RESPONSE].headers[RequestConstants.JSON_CONTENT_TYPE]
     
     def set_http_request_body_with_pet_details(self, pet):

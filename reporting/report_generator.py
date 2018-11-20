@@ -180,7 +180,7 @@ class ReportGenerator(object):
         for scenario in json_data:
             counters = {ReportConstants.PASSED:0, ReportConstants.FAILED:0, ReportConstants.SKIPPED:0, ReportConstants.ERROR:0}
             for step in scenario[ReportConstants.SCENARIO + str(scenario_id)][ReportConstants.STEPS]:
-                counters[step[ReportConstants.STATUS]] +=1
+                counters[ReportConstants.REPORT_STATUSES[step[ReportConstants.STATUS]]] +=1
 
             row = HtmlReportConstants.REPORT_CLASS_TMPL % dict(
                 style=counters[ReportConstants.ERROR] > 0 and 'errorClass' or counters[ReportConstants.SKIPPED] > 0 and 'skippedClass'or counters[ReportConstants.FAILED] > 0 and 'failClass' or 'passClass',

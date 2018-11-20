@@ -54,6 +54,7 @@ Scenario: GET pet request using pet ID
 	And Response BODY is not null or empty 
 	And Response BODY contains newly added pet details
 
+@check
 Scenario Outline: GET pet request using pet status
 
   Given "GET FINDBYSTATUS" api pet request endpoint is set as "pet/findByStatus" 

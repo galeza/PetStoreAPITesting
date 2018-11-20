@@ -15,6 +15,14 @@ class ReportConstants(object):
     FAILED = 'failed'
     SKIPPED = 'skipped'
     ERROR = 'error'
+    BROKEN = 'broken'
+    REPORT_STATUSES ={
+        PASSED : PASSED,
+        FAILED : FAILED,
+        SKIPPED : SKIPPED,
+        ERROR : ERROR,
+        BROKEN : FAILED
+        }
     
     #report json columns
     SCENARIO = 'Scenario_'

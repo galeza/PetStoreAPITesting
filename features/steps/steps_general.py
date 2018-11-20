@@ -43,7 +43,6 @@ def step_impl(context, http_request_type):
         context.requestConfigManager.set_get_response_full(url_temp)
     elif RequestConstants.JSON_FINDBYSTATUS == http_request_type:
         url_temp += context.requestConfigManager.get_endpoint() + context.pet.get_pet_status()
-        print(url_temp)
         context.requestConfigManager.clear_http_request_body()
         context.requestConfigManager.set_get_response_full(url_temp)
     elif RequestConstants.JSON_POST == http_request_type:
