@@ -1,6 +1,10 @@
 Feature: REST API Python and Behave testing framework
 	Python requests module is used to raise requests concerning pet shop 
 	User can add, modify, delete pet. HTTP responses are validated and JSON response is parsed.
+
+#
+#    BACKGROUND steps are called at begin of each scenario before other steps.
+#   
 	
 Background: 
 	Given Swagger PetStore web application url is set as "https://petstore.swagger.io/v2/"
@@ -54,7 +58,7 @@ Scenario: GET pet request using pet ID
 	And Response BODY is not null or empty 
 	And Response BODY contains newly added pet details
 
-@check
+
 Scenario Outline: GET pet request using pet status
 
   Given "GET FINDBYSTATUS" api pet request endpoint is set as "pet/findByStatus" 
@@ -72,7 +76,19 @@ Scenario Outline: GET pet request using pet status
       | pending|
       | available|
       |sold|
-      
+
+Scenario: GET pet request using invalid pet status
+
+  Given "GET FINDBYSTATUS" api pet request endpoint is set as "pet/findByStatus" 
+  When Pet status is set as "invalid"
+    And HEADER params for request and response are specified
+	And "GET FINDBYSTATUS" HTTP request is raised
+  Then Valid HTTP response is received
+#  	And Validate response
+	And Response http code is 400 
+	And Response HEADER content type is "application/json" 
+#	And Response BODY is not null or empty 
+#	And Response BODY pet status is equal to pet status      
 	      		
 Scenario: DELETE pet request using pet ID
 
@@ -91,7 +107,17 @@ Scenario: DELETE pet request using pet ID
 	And Response http code is 200 
 	And Response HEADER content type is "application/json" 
 	And Response BODY is not null or empty 
-	
+
+Scenario: DELETE pet request using nonexisting pet ID
+
+    Given "DELETE" api pet request endpoint is set as "pet"
+    When HEADER params for request and response are specified
+	And "DELETE" HTTP request is raised
+  Then Valid HTTP response is received
+#  	And Validate response
+	And Response http code is 404 
+
+		
 Scenario: UPDATE pet request using pet ID
 
   Given "POST" api pet request endpoint is set as "pet"

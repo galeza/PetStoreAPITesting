@@ -130,7 +130,10 @@ class RequestConfigManager(object):
     
     def get_response_full_status_code(self):
         return self.basic_config[RequestConstants.JSON_RESPONSE].status_code   
-    
+
+    def get_response_full_text(self):
+        return self.basic_config[RequestConstants.JSON_RESPONSE].text 
+       
     def get_response_full_content_type(self):
         return self.basic_config[RequestConstants.JSON_RESPONSE].headers[RequestConstants.JSON_CONTENT_TYPE]
     
