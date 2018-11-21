@@ -2,10 +2,7 @@ Feature: REST API Python and Behave testing framework
 	Python requests module is used to raise requests concerning pet shop 
 	User can add, modify, delete pet. HTTP responses are validated and JSON response is parsed.
 
-#
 #    BACKGROUND steps are called at begin of each scenario before other steps.
-#   
-	
 Background: 
 	Given Swagger PetStore web application url is set as "https://petstore.swagger.io/v2/"
 
@@ -87,8 +84,7 @@ Scenario: GET pet request using invalid pet status
 #  	And Validate response
 	And Response http code is 400 
 	And Response HEADER content type is "application/json" 
-#	And Response BODY is not null or empty 
-#	And Response BODY pet status is equal to pet status      
+	And Response http text is "Invalid status value" 
 	      		
 Scenario: DELETE pet request using pet ID
 
@@ -116,6 +112,7 @@ Scenario: DELETE pet request using nonexisting pet ID
   Then Valid HTTP response is received
 #  	And Validate response
 	And Response http code is 404 
+	And Response http text is "Pet not found"
 
 		
 Scenario: UPDATE pet request using pet ID
@@ -136,7 +133,26 @@ Scenario: UPDATE pet request using pet ID
 	And Response http code is 200 
 	And Response HEADER content type is "application/json" 
 	And Response BODY is not null or empty 	
-		
+
+Scenario: UPDATE pet request with invalid status
+
+  Given "POST" api pet request endpoint is set as "pet"
+  When HEADER params for request and response are specified
+	And Pet details are specified as "Elwanek" and "/Users/a/Documents/Sel/workspace/PetStoreAPITesting1 " and "pending"
+	And Request BODY form parameters are set using pet details 
+	And "POST" HTTP request is raised
+    And Valid HTTP response is received 
+	And Response http code is 200 
+    And "PUT" api pet request endpoint is set as "pet"	
+    And Pet status is set as "invalid"
+    And Request BODY form parameters are set using pet details
+	And "PUT" HTTP request is raised
+  Then Valid HTTP response is received
+#  	It should be 405 - invalid input
+	And Response http code is 200 
+	And Response HEADER content type is "application/json" 
+	And Response BODY is not null or empty 	
+			
 Scenario: UPLOAD pet photo/image POST request using pet ID
 
   Given "POST" api pet request endpoint is set as "pet"

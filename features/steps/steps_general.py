@@ -74,6 +74,11 @@ def step_impl(context, expected_response_code):
     if str(actual_response_code) not in str(expected_response_code):
         assert_that('***ERROR: Following unexpected error response code received: ' + str(actual_response_code))
 
+@step(u'Response http text is "{expected_response_text}"')
+def step_impl(context, expected_response_text):
+    actual_response_text = context.requestConfigManager.get_response_full_text()
+    if actual_response_text not in expected_response_text:
+        assert_that('***ERROR: Following unexpected error response text received: ' + actual_response_text)
 
 @then(u'Response HEADER content type is "{expected_response_content_type}"')
 def step_impl(context, expected_response_content_type):
