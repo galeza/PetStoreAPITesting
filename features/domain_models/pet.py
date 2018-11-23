@@ -46,7 +46,7 @@ class Pet(object):
 
     @category.setter
     def category(self, value):
-        self._category = value
+        self._category.name = value
 
     @category.deleter
     def category(self):

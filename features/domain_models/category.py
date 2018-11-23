@@ -14,22 +14,29 @@ class Category(Base):
     '''
     classdocs
     '''
-    id = 0
-    name = ""
-
-    def get_category_id(self):
-        return  self.id
-
-    def get_category_name(self):
-        return self.name
-
-    def set_category_name(self, category_name):
-        self.name = category_name
  
+    @property
+    def id(self):
+        """id property."""
+        return self._id
 
+    @property
+    def name(self):
+        """name property."""
+        return self._name
+
+    @name.setter
+    def name(self, value):
+        self._name = value
+
+    @name.deleter
+    def name(self):
+        del self._name
+        
                
     def __init__(self):
         '''
         Constructor
         '''
-        self.id = RandomStringGenerator.generate_random_number_with_n_digits(6)
+        self._id = RandomStringGenerator.generate_random_number_with_n_digits(6)
+        self._name = ""
