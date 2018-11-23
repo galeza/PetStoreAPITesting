@@ -138,19 +138,19 @@ class RequestConfigManager(object):
         return self.basic_config[RequestConstants.JSON_RESPONSE].headers[RequestConstants.JSON_CONTENT_TYPE]
     
     def set_http_request_body_with_pet_details(self, pet):
-        self.http_request_body[RequestConstants.JSON_ID] = pet.get_pet_id()
-        self.http_request_body[RequestConstants.JSON_NAME] = pet.get_pet_name()
-        self.http_request_body[RequestConstants.JSON_PHOTOURLS] = pet.get_pet_photourls()
-        self.http_request_body[RequestConstants.JSON_STATUS] = pet.get_pet_status()
-        self.http_request_body[RequestConstants.JSON_CATEGORY] = pet.get_pet_category().to_dict()
-        self.http_request_body[RequestConstants.JSON_TAGS] = pet.get_pet_tag_list()
+        self.http_request_body[RequestConstants.JSON_ID] = pet.pet_id
+        self.http_request_body[RequestConstants.JSON_NAME] = pet.name
+        self.http_request_body[RequestConstants.JSON_PHOTOURLS] = pet.photourls
+        self.http_request_body[RequestConstants.JSON_STATUS] = pet.status
+        self.http_request_body[RequestConstants.JSON_CATEGORY] = pet.category.to_dict()
+        self.http_request_body[RequestConstants.JSON_TAGS] = pet.tag_list
 #         self.logger.info('http_request_body ' + str(self.http_request_body))
 
     def set_http_request_body_with_pet_photo(self, pet):
         self.clear_http_request_body()
 
         self.multipart_data = {
-            'file': (pet.get_pet_photo(), open('./' + pet.get_pet_photo(), 'rb'), 'image/jpeg'),
+            'file': (pet.photo, open('./' + pet.photo, 'rb'), 'image/jpeg'),
            }
     def configure_logger(self):
         logging.basicConfig(format='%(asctime)s - %(name)s - %(levelname)s - %(message)s', level=logging.INFO)
