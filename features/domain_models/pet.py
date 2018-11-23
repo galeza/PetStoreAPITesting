@@ -31,14 +31,6 @@ class Pet(object):
         """pet_id property."""
         return self._pet_id
 
-    @pet_id.setter
-    def pet_id(self, value):
-        self._pet_id = value
-
-    @pet_id.deleter
-    def pet_id(self):
-        del self._pet_id
-        
     @property
     def category(self):
         """category property."""
