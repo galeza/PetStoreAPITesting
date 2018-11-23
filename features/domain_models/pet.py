@@ -25,70 +25,112 @@ class Pet(object):
     '''
     classdocs
     '''
-    status_list = [RequestConstants.JSON_STATUS_AVAILABLE, RequestConstants.JSON_STATUS_PENDING, RequestConstants.JSON_STATUS_SOLD]
-    category = None
-    tag_list = []
-    pet_id = 0
-    name = ""
-    photourls = []
-    status = ""
-    photo =""
-    logger = logging.getLogger(__name__)
 
-    def get_pet_id(self):
-        return  self.pet_id
+    @property
+    def pet_id(self):
+        """pet_id property."""
+        return self._pet_id
 
-    def get_pet_name(self):
-        return self.name
+    @property
+    def category(self):
+        """category property."""
+        return self._category
 
-    def set_pet_name(self, name):
-        self.name = name
-       
-    def get_pet_status(self):
-        return self.status
-    
-    def set_pet_status(self, status):
-        self.status = status
+    @category.setter
+    def category(self, value):
+        self._category.name = value
 
-    def get_pet_photourls(self):
-        return self.photourls
-    
-    def set_pet_photourls(self, photourls):
-        self.photourls = photourls
+    @category.deleter
+    def category(self):
+        del self._category
 
-    def get_pet_photo(self):
-        return self.photo
-    
-    def set_pet_photo(self, photo):
-        self.photo = photo
+    @property
+    def tag_list(self):
+        """tag_list property."""
+        return self._tag_list
 
-    def get_pet_category(self):
-        return self.category
+    @tag_list.setter
+    def tag_list(self, value):
+        self._tag_list = value
 
-    def set_pet_category(self, category_name):
-        self.category.set_category_name(category_name)
+    @tag_list.deleter
+    def tag_list(self):
+        del self._tag_list
+
+    @property
+    def name(self):
+        """name property."""
+        return self._name
+
+    @name.setter
+    def name(self, value):
+        self._name = value
+
+    @name.deleter
+    def name(self):
+        del self._name
         
-    def get_pet_tag_list(self):
-        return self.tag_list
+    @property
+    def photourls(self):
+        """photourls property."""
+        return self._photourls
 
-    def set_pet_tag_list(self, tag_list):
-        self.tag_list = tag_list
-                         
+    @photourls.setter
+    def photourls(self, value):
+        self._photourls = value
+
+    @photourls.deleter
+    def photourls(self):
+        del self._photourls        
+
+    @property
+    def status(self):
+        """status property."""
+        return self._status
+
+    @status.setter
+    def status(self, value):
+        self._status = value
+
+    @status.deleter
+    def status(self):
+        del self._status 
+
+    @property
+    def photo(self):
+        """photo property."""
+        return self._photo
+
+    @photo.setter
+    def photo(self, value):
+        self._photo = value
+
+    @photo.deleter
+    def photo(self):
+        del self._photo
+                       
     def set_pet_details(self, pet_details):
-        self.set_pet_name(pet_details.get(RequestConstants.JSON_NAME))
+        self.name = pet_details.get(RequestConstants.JSON_NAME)
 #         for pet_URLS
-        self.set_pet_photourls(pet_details.get(RequestConstants.JSON_PHOTOURLS))
-        self.set_pet_status(pet_details.get(RequestConstants.JSON_STATUS))
+        self.photourl = pet_details.get(RequestConstants.JSON_PHOTOURLS)
+        self.status  = pet_details.get(RequestConstants.JSON_STATUS)
 #         for pet TAGS
-        self.set_pet_tag_list(pet_details.get(RequestConstants.JSON_TAGS))
-        self.set_pet_category(pet_details.get(RequestConstants.JSON_CATEGORY))
+        self.tag_list = pet_details.get(RequestConstants.JSON_TAGS)
+        self.category = pet_details.get(RequestConstants.JSON_CATEGORY)
         
     def __init__(self):
         '''
         Constructor
         '''
-        self.pet_id = RandomStringGenerator.generate_random_number_with_n_digits(6)
-        self.category = Category()
+        self._pet_id = RandomStringGenerator.generate_random_number_with_n_digits(6)
+        self._category = Category()
+#             status_list = [RequestConstants.JSON_STATUS_AVAILABLE, RequestConstants.JSON_STATUS_PENDING, RequestConstants.JSON_STATUS_SOLD]
+        self._tag_list = []
+        self._name = ""
+        self._photourls = []
+        self._status = ""
+        self._photo =""
+#         self._logger = logging.getLogger(__name__)
 
         
         
