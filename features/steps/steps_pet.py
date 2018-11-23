@@ -39,7 +39,7 @@ def step_impl(context, pet_property, value):
             photourls.append(row['value'])
         elif(row['pet_property']) == RequestConstants.JSON_TAG:
             tag = Tag()
-            tag.set_tag_name(row['value'])
+            tag.name = row['value']
             tags.append(tag.to_dict())  
         else:
             pet_details[row['pet_property']] = row['value']

@@ -14,21 +14,31 @@ class Tag(Base):
     '''
     classdocs
     '''
-    id = 0
-    name = ''
 
-    def get_tag_id(self):
-        return  self.id
 
-    def get_tag_name(self):
-        return self.name
+    @property
+    def id(self):
+        """id property."""
+        return self._id
 
-    def set_tag_name(self, tag_name):
-        self.name = tag_name
+    @property
+    def name(self):
+        """name property."""
+        return self._name
+
+    @name.setter
+    def name(self, value):
+        self._name = value
+
+    @name.deleter
+    def name(self):
+        del self._name
+        
 
                 
     def __init__(self):
         '''
         Constructor
         '''
-        self.id = RandomStringGenerator.generate_random_number_with_n_digits(6)
+        self._id = RandomStringGenerator.generate_random_number_with_n_digits(6)
+        self._name = ""
