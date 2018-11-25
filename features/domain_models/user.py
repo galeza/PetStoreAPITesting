@@ -49,7 +49,11 @@ class User(object):
     @user_id.setter
     def user_id(self, value):
         self._user_id = value
-        
+
+    @user_id.deleter
+    def user_id(self):
+        del self._user_id
+                
     @property
     def username(self):
         """username property."""
@@ -58,7 +62,11 @@ class User(object):
     @username.setter
     def username(self, value):
         self._username = value
-        
+
+    @username.deleter
+    def username(self):
+        del self._username
+                
     @property
     def first_name(self):
         """first_name property."""
@@ -67,7 +75,11 @@ class User(object):
     @first_name.setter
     def first_name(self, value):
         self._first_name = value
-        
+
+    @first_name.deleter
+    def first_name(self):
+        del self._first_name
+                
     @property
     def last_name(self):
         """last_name property."""
@@ -76,7 +88,11 @@ class User(object):
     @last_name.setter
     def last_name(self, value):
         self._last_name = value
-        
+
+    @last_name.deleter
+    def last_name(self):
+        del self._last_name
+                
     @property
     def email(self):
         """email property."""
@@ -85,7 +101,11 @@ class User(object):
     @email.setter
     def email(self, value):
         self._email = value
-        
+
+    @email.deleter
+    def email(self):
+        del self._email
+                
     @property
     def password(self):
         """password property."""
@@ -94,7 +114,11 @@ class User(object):
     @password.setter
     def password(self, value):
         self._password = value
-        
+
+    @password.deleter
+    def password(self):
+        del self._password
+                
     @property
     def phone(self):
         """phone property."""
@@ -103,7 +127,11 @@ class User(object):
     @phone.setter
     def phone(self, value):
         self._phone = value
-        
+
+    @phone.deleter
+    def phone(self):
+        del self._phone
+                
     @property
     def user_status(self):
         """user_status property."""
@@ -112,3 +140,7 @@ class User(object):
     @user_status.setter
     def user_status(self, value):
         self._user_status = value
+        
+    @user_status.deleter
+    def user_status(self):
+        del self._user_status
