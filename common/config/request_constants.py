@@ -28,6 +28,7 @@ class RequestConstants(object):
     JSON_POST = 'POST'
     JSON_PUT = 'PUT'
     JSON_UPLOAD = 'POST UPLOADIMAGE'
+    JSON_USER_GET_LOGIN = 'GET LOGIN'
     JSON_REQUEST_STATUS = '?status='
     JSON_URL = 'basic_url'
     JSON_CONTENT_TYPE = 'Content-Type'
@@ -38,4 +39,6 @@ class RequestConstants(object):
     JSON_RESPONSE_CONTENT_TYPE =  'expected_response_content_type'
     JSON_API_KEY =  'api_key'
     API_KEY = 'galeza'
+    PARAMS_USERNAME = 'username'
+    PARAMS_PASSWORD = 'password'
     

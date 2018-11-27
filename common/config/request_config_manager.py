@@ -109,7 +109,12 @@ class RequestConfigManager(object):
                                                                                          params=self.http_request_url_query_param,
                                                                                          json=self.http_request_body) 
 
-                        
+    def set_get_user_login_response_full(self, url_temp):
+        self.basic_config[RequestConstants.JSON_RESPONSE] = requests.get(url_temp,
+                                                                                         headers=self.http_request_header,
+                                                                                         params=self.http_request_url_query_param) 
+
+                                               
     def get_response_full(self):
         return self.basic_config[RequestConstants.JSON_RESPONSE]  
 
@@ -146,6 +151,10 @@ class RequestConfigManager(object):
         self.http_request_body[RequestConstants.JSON_TAGS] = pet.tag_list
 #         self.logger.info('http_request_body ' + str(self.http_request_body))
 
+    def set_http_request_url_query_param(self,user):
+        self.http_request_url_query_param[RequestConstants.PARAMS_USERNAME] = user.username
+        self.http_request_url_query_param[RequestConstants.PARAMS_PASSWORD] = user.password
+         
     def set_http_request_body_with_pet_photo(self, pet):
         self.clear_http_request_body()
 
