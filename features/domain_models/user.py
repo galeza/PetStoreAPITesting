@@ -144,3 +144,12 @@ class User(object):
     @user_status.deleter
     def user_status(self):
         del self._user_status
+        
+    def set_user_details(self, user_details):
+        self.username = user_details.get(RequestConstants.JSON_USER_NAME)
+        self.first_name =user_details.get(RequestConstants.JSON_USER_FIRST_NAME)
+        self.last_name  =user_details.get(RequestConstants.JSON_USER_LAST_NAME)
+        self.email =user_details.get(RequestConstants.JSON_USER_EMAIL)
+        self.password =user_details.get(RequestConstants.JSON_USER_PASSWORD)
+        self.phone =user_details.get(RequestConstants.JSON_USER_PHONE)
+        self.user_status =user_details.get(RequestConstants.JSON_USER_STATUS)

@@ -151,6 +151,16 @@ class RequestConfigManager(object):
         self.http_request_body[RequestConstants.JSON_TAGS] = pet.tag_list
 #         self.logger.info('http_request_body ' + str(self.http_request_body))
 
+    def set_http_request_body_with_user_details(self, user):
+        self.http_request_body[RequestConstants.JSON_ID] = user.user_id
+        self.http_request_body[RequestConstants.JSON_USER_NAME] = user.username
+        self.http_request_body[RequestConstants.JSON_USER_FIRST_NAME] = user.first_name
+        self.http_request_body[RequestConstants.JSON_USER_LAST_NAME] = user.last_name
+        self.http_request_body[RequestConstants.JSON_USER_EMAIL] = user.email
+        self.http_request_body[RequestConstants.JSON_USER_PASSWORD] = user.password
+        self.http_request_body[RequestConstants.JSON_USER_PHONE] = user.phone
+        self.http_request_body[RequestConstants.JSON_USER_STATUS] = user.user_status
+        
     def set_http_request_url_query_param(self,user):
         self.http_request_url_query_param[RequestConstants.PARAMS_USERNAME] = user.username
         self.http_request_url_query_param[RequestConstants.PARAMS_PASSWORD] = user.password
