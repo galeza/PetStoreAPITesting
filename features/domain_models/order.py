@@ -41,11 +41,12 @@ class Order(object):
         """complete property."""
         return self._complete
                
-    def __init__(self):
+    def __init__(self, pet):
         '''
         Constructor
         '''
         self._order_id = RandomStringGenerator.generate_random_number_with_n_digits(1)
+        self._pet_id = pet.pet_id()
         self._quantity = 1
         self._ship_date = datetime.datetime.now()
         self._status = ""
